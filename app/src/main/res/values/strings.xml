@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">Up-Send</string>
+
+    <!--Titles-->
+    <string name="onboarding_slide1_title">Selamat Datang di Up-Send</string>
+    <string name="onboarding_slide1_subtitle">Yuk, Bikin Event!</string>
+    <string name="onboarding_slide1_desc">Kamu bisa mengelola eventmu hanya melalui smartphone</string>
+
+    <string name="onboarding_slide2_title">Login to your account</string>
+    <string name="onboarding_slide2_subtitle">Lihat orang yang hadir di eventmu</string>
+    <string name="onboarding_slide2_desc">Kamu juga bisa melihat siapa saja yang hadir di eventmu</string>
+
+    <string name="onboarding_slide3_title">Login to your account</string>
+    <string name="onboarding_slide3_subtitle">Daftar dan ikuti event yang menarik</string>
+    <string name="onboarding_slide3_desc">Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi</string>
+
+    <string name="onboarding_slide4_title">Daftar Akun</string>
+    <string name="onboarding_slide4_subtitle">Yuk, gabung bersama kami</string>
+    <string name="onboarding_slide4_desc">Jadwal eventmu akan kami kelola dengan baik</string>
+
+    <!--Button OnBoarding-->
+    <string name="skip_btn">Lewati</string>
+    <string name="next">Lanjut</string>
+    <string name="skip">Lewati</string>
+    <string name="get_started">Mulai</string>
+    <string name="login">Masuk</string>
+    <string name="register_account">Daftar Akun</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="firstname">Nama Depan</string>
+    <string name="last_name">Nama Belakang</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="title_event">Title Event</string>
+    <string name="datetime_event">DateTime Event</string>
+    <string name="status_event">Status Event</string>
+    <string name="description_event">Kamu juga bisa melihat siapa saja yang hadir di eventmu. Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi. Jadwal eventmu akan kami kelola dengan baik</string>
+    <string name="text_description_event">Deskripsi</string>
+    <string name="text_dateTime_event">Tanggal - Waktu</string>
+    <string name="dateTime_event">01-01-2020 - 09:00</string>
+    <string name="participant_registration">Peserta Daftar</string>
+    <string name="participant_come">Peserta Hadir</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="text_start_date">Mulai : </string>
+    <string name="text_due_date">Selesai : </string>
+    <string name="_0">0</string>
+    <string name="submit">Kirim</string>
+    <string name="start_date">Tanggal Mulai</string>
+    <string name="due_event">Tanggal Selesai</string>
+    <string name="start_time">Waktu Mulai</string>
+    <string name="due_time">Waktu Selesai</string>
+    <string name="simple_message">Message</string>
+    <string name="search_event">Cari Eventmu dan Ikuti</string>
+    <string name="data_not_found">Kamu tidak memiliki Event</string>
+    <string name="not_have_participant">Belum ada peserta</string>
+    <string name="text_capasity_event">Kapasitas</string>
+    <string name="event_detail_title">Detail Event</string>
+    <string name="profile">Profil</string>
+    <string name="logout">Keluar</string>
+    <string name="event_created">Event Dibuat</string>
+    <string name="event_following">Event Diikuti</string>
+    <string name="name">fullname</string>
+    <string name="fullname">Nama Lengkap</string>
+    <string name="confirm_logout">Konfirmasi</string>
+    <string name="question_logout">Apakah anda ingin keluar?</string>
+    <string name="yes">Iya</string>
+    <string name="no">Tidak</string>
+    <string name="loading">Loading...</string>
+    <string name="login_success">Berhasil Login</string>
+    <string name="registration_success">Berhasil Registrasi</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.meeting_app">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name="com.example.meeting_app.ui.profile.ProfileActivity"/>
+        <activity
+            android:name="com.example.meeting_app.ui.scanner.ScannerActivity"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity
+            android:name="com.example.meeting_app.ui.event.EventActivity"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity
+            android:name="com.example.meeting_app.ui.detail.DetailActivity"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity
+            android:name="com.example.meeting_app.ui.home.HomeActivity"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity android:name="com.example.meeting_app.ui.login.LoginActivity" />
+        <activity android:name="com.example.meeting_app.ui.onBoarding.OnBoardingActivity" />
+        <activity android:name="com.example.meeting_app.ui.splashscreen.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,131 @@
+[33mcommit 46cab3b923e692522530591fc13ad9d50536006c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:24:26 2020 +0700
+
+    create detail event response from API
+
+[33mcommit f455a6449f0d0ddbbb585737a1c1aaeebf5112b1[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:24:03 2020 +0700
+
+    observe viewModel
+
+[33mcommit 82451bc84963b38ce9af12d0276b0a3e4d99dd72[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:23:20 2020 +0700
+
+    login features viewModel
+
+[33mcommit e4e85580ec54aeb9a5cf0f9749565fce58399596[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:22:45 2020 +0700
+
+    change id and textView
+
+[33mcommit 7fa571f7d8a8c5fa5108a08c4ee179da28b2475e[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:22:02 2020 +0700
+
+    change text textView start and due dateTime
+
+[33mcommit 0dff3c9da13878c649ab539daef3f5bf29646be3[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:21:28 2020 +0700
+
+    sharedPref user and isLogin
+
+[33mcommit 8166a641e69c950e5927533fd8a1a4cf98846e08[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:21:07 2020 +0700
+
+    endpoint API
+
+[33mcommit ce774984b38cfbbf024f78d7a907ec4cebfd42ee[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:20:49 2020 +0700
+
+    create single live event
+
+[33mcommit 85451cf860de2b6d2dca635f4f34ab9540343404[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:20:28 2020 +0700
+
+    add string resource
+
+[33mcommit 9a8d600071969aed27a02d4a2706b584d060da56[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:20:02 2020 +0700
+
+    model
+
+[33mcommit a077b15e5e87c8674d8b1d8b59a899f09f188714[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:19:48 2020 +0700
+
+    navigate btn add
+
+[33mcommit e8aaa3d8d1906a75560ad0e240794b21bb8f43ee[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:19:09 2020 +0700
+
+    create custom toast
+
+[33mcommit 36ae658fa4f993eea49849236b05d4c8091dd4ed[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:18:43 2020 +0700
+
+    create form add update activity
+
+[33mcommit 30d8a5b7ee5e009875b817cd802df8d8d7acb710[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:18:01 2020 +0700
+
+    resource toast
+
+[33mcommit f6629a9bad828f18bd298a024f9f1840259d5364[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Tue Dec 22 22:17:41 2020 +0700
+
+    api config
+
+[33mcommit 18ac7f489d9a1e30013c522b0fb02e25c6a9afb4[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Mon Dec 21 14:08:52 2020 +0700
+
+    create icon scan large
+
+[33mcommit 3158c84ea8525d738c40f5e4aaad37839d54a6d3[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Mon Dec 21 14:07:47 2020 +0700
+
+    updated home activity
+
+[33mcommit b57f5d4656a34f990c60747af977c2dbb9ec55e6[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Mon Dec 21 14:07:15 2020 +0700
+
+    detail event feature
+
+[33mcommit 08e3f4a2775ee94776bd2e62b414170a646ba103[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Sat Dec 19 17:30:50 2020 +0700
+
+    create home page
+
+[33mcommit 0e0faf080cf7458fa0458eca56c8724aa00cffd2[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Fri Dec 18 18:06:24 2020 +0700
+
+    vcs yuk
+
+[33mcommit 03b12ef31d360e38be24bed6ad5ec283502d9d7c[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Fri Dec 18 18:04:58 2020 +0700
+
+    registration feature
+
+[33mcommit b519495a261c941d13e362152a50175a49e1a26c[m
+Author: imufiid <imufiid98@gmail.com>
+Date:   Fri Dec 18 15:58:21 2020 +0700
+
+    project upsend
