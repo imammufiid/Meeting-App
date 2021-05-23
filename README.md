@@ -1,4 +1,4 @@
-# UP-SEND
+# Meeting App
 
 <p align="center">
   <img src="https://i.pinimg.com/originals/d0/29/14/d029141aab198b058b8f0515b9e2f1f5.gif"/>
@@ -17,10 +17,9 @@
 - View Model ([docs](https://developer.android.com/topic/libraries/architecture/viewmodel))
 - Retrofit ([docs](https://square.github.io/retrofit/))
 - RXJava ([docs](https://github.com/ReactiveX/RxJava))
-- Glide ([docs](https://github.com/bumptech/glide))
 
 ---
 
 ```
-Copyright 2020 Imam Mufiid
+Copyright 2020
 ```
