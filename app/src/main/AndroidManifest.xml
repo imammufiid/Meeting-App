@@ -5,8 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -29,10 +27,11 @@
             android:theme="@style/Theme.NoActionBar" />
         <activity
             android:name="com.example.meeting_app.ui.detail.DetailActivity"
-            android:theme="@style/Theme.NoActionBar" />
+            android:parentActivityName=".ui.home.HomeActivity"/>
         <activity
             android:name="com.example.meeting_app.ui.home.HomeActivity"
-            android:theme="@style/Theme.NoActionBar" />
+            android:theme="@style/Theme.NoActionBar"
+            android:launchMode="singleTop"/>
         <activity android:name="com.example.meeting_app.ui.login.LoginActivity" />
         <activity android:name="com.example.meeting_app.ui.onBoarding.OnBoardingActivity" />
         <activity android:name="com.example.meeting_app.ui.splashscreen.SplashScreenActivity">
