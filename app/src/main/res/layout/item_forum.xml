@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="12dp"
     android:backgroundTint="@color/colorGreyLight"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
