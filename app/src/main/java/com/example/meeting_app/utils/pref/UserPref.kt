@@ -5,33 +5,25 @@ import androidx.core.content.edit
 import com.example.meeting_app.data.entity.UserEntity
 
 object UserPref {
-    fun getUserData(context: Context): UserEntity? {
+    fun getUserData(context: Context): UserEntity {
         val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
         return UserEntity().apply {
-            username = pref.getString("USERNAME", "")
-            token = pref.getString("TOKEN", "")
-            firstName = pref.getString("FIRSTNAME", "")
-            lastName = pref.getString("LASTNAME", "")
+            nama = pref.getString("USERNAME", "")
             email = pref.getString("EMAIL", "")
-            token = pref.getString("TOKEN", "")
-            id = pref.getInt("ID_USER", 0)
+            idUser = pref.getString("ID_USER", "")
         }
     }
 
     fun setUserData(context: Context, user: UserEntity) {
         val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
         pref.edit {
-            putString("USERNAME", user.username)
-            putString("TOKEN", user.token)
-            putString("FIRSTNAME", user.firstName)
-            putString("LASTNAME", user.lastName)
+            putString("USERNAME", user.nama)
             putString("EMAIL", user.email)
-            putString("TOKEN", user.token)
-            user.id?.let { putInt("ID_USER", it) }
+            putString("ID_USER", user.idUser)
         }
     }
 
-    fun getIsLoggedIn(context: Context): Boolean? {
+    fun getIsLoggedIn(context: Context): Boolean {
         val pref = context.getSharedPreferences("USER", Context.MODE_PRIVATE)
         return pref.getBoolean("IS_LOGGED_IN", false)
     }
