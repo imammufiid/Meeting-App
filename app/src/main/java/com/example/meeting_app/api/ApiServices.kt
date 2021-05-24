@@ -79,12 +79,21 @@ interface ApiServices {
         @Query("user_id") userId: Int?
     ): Observable<WrappedListResponses<EventEntity>>
 
-    // GET SHOW EVENT
-    @GET("event/show")
-    fun getEventById(
-        @Header("Authorization") token: String?,
-        @Query("id") id: Int?
-    ): Observable<WrappedResponse<EventEntity>>
+    // GET SHOW MEETING
+    @GET("peserta/rapat/{id_user}/{id_rapat}")
+    fun getRapatById(
+        @Path("id_user") idUser: String?,
+        @Path("id_rapat") idRapat: String?,
+    ): Observable<WrappedResponse<MeetingEntity>>
+
+    // GET FORUM
+    @GET("peserta/forum/{id_rapat}")
+    fun getForumByRapatId(
+        @Path("id_rapat") idRapat: String?,
+        @Query("filter_time") filterTime: String?,
+        @Query("filter_like") filterLike: String?,
+        @Query("filter_reply") filterReply: String?,
+    ): Observable<WrappedListResponses<ForumEntity>>
 
     // GET SEARCH EVENT
     @Headers("Accept: application/json")
