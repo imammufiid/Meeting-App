@@ -33,26 +33,6 @@ class HomeViewModel:ViewModel() {
         )
     }
 
-    fun logout(token: String?, userId: Int? = null) {
-        state.value = MeetingState.IsLoading(true)
-        CompositeDisposable().add(
-            api.logout("Bearer $token", userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when(it.status) {
-                        200 -> state.value = MeetingState.IsSuccess(it.message)
-                        else -> state.value = MeetingState.Error(it.message)
-                    }
-                    state.value = MeetingState.IsLoading()
-                }, {
-                    state.value = MeetingState.Error(it.message)
-                    state.value = MeetingState.IsLoading()
-                })
-        )
-    }
-
-
     fun getMeetingData() = meeting
     fun getState() = state
 }
