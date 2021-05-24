@@ -18,7 +18,7 @@ class ForumAdapter(val callback: ActionCallback) :
         @SuppressLint("SetTextI18n")
         fun bind(forum: ForumEntity) {
 
-            itemView.user.text = forum.idUser
+            itemView.user.text = forum.user?.nama
             itemView.comment.text = forum.isi
             itemView.total_likes.text = "${forum.likesCount} suka"
             itemView.total_reply.text = "${forum.totalReply} balasan"

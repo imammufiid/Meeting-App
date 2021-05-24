@@ -4,27 +4,33 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
-import com.example.meeting_app.data.entity.EventEntity
+import com.example.meeting_app.data.entity.ForumEntity
+import com.example.meeting_app.data.entity.MeetingEntity
 import com.example.meeting_app.databinding.ActivityDetailBinding
-import com.example.meeting_app.ui.participant.ParticipantListDialogFragment
-import com.example.meeting_app.ui.scanner.ScannerActivity
+import com.example.meeting_app.ui.forum_detail.ForumDetailActivity
 import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
+import kotlinx.android.synthetic.main.item_meeting.view.*
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
     private lateinit var loading: ProgressDialog
-    private var dataEvent: EventEntity? = null
+    private var dataEvent: MeetingEntity? = null
+    private lateinit var adapter: ForumAdapter
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
         const val ACTIVITY_NAME = "DetailActivity"
+        const val ASC = "asc"
+        const val DESC = "desc"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,25 +38,21 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
         init()
         setParcelable()
+        observeViewModel()
+        setRecyclerView()
     }
 
     override fun onResume() {
         super.onResume()
-        showDataById()
     }
 
     private fun init() {
-        binding.layoutParticipantRegistration.setOnClickListener(this)
-        binding.layoutParticipantCome.setOnClickListener(this)
-        binding.layoutScan.setOnClickListener(this)
-        binding.include.ibBack.setOnClickListener(this)
-        binding.include.ibEdit.setOnClickListener(this)
-        loading = ProgressDialog(this)
 
-        binding.include.titleAppBar.text = getString(R.string.event_detail_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Detail Rapat"
+        loading = ProgressDialog(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -70,46 +72,88 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setParcelable() {
         dataEvent = intent.getParcelableExtra(EXTRAS_DATA)
-
     }
 
-    private fun checkIfCreator(userId: Int?) {
-        if(userId ==  UserPref.getUserData(this)?.id) {
-            binding.include.ibEdit.visibility = View.VISIBLE
-        } else {
-            binding.layoutScan.visibility = View.VISIBLE
-        }
-    }
-
-    private fun showDataById() {
+    private fun observeViewModel() {
         dataEvent?.let {
-            viewModel.getEventById(UserPref.getUserData(this)?.token, it.id)
+            viewModel.getRapatById(UserPref.getUserData(this)?.idUser, dataEvent?.idRapat)
+            viewModel.getForumByRapatId(dataEvent?.idRapat)
         }
 
-        viewModel.getEvent().observe(this, Observer {
+        viewModel.getMeeting().observe(this, Observer {
             if (it != null) {
-                Glide.with(this)
-                    .load(it.image)
-                    .placeholder(R.drawable.ic_image_placeholder)
-                    .into(binding.imageEvent)
-                binding.titleEvent.text = it.name
-                val startDateTime = it.startDate?.split(" ")
-                val startDate = startDateTime?.get(0)
-                val startTime = startDateTime?.get(1)
-                binding.dateTimeEvent.text = "$startDate = $startTime"
+                binding.titleMeeting.text = it.temaRapat
+                binding.keteranganMeeting.text = it.keterangan
+                binding.fromMeeting.text = it.dari
+                binding.roomMeeting.text = it.ruang
+                binding.dateMeeting.text = it.tglRapat
+                binding.dateTimeMeeting.text = it.jamMulai
+                binding.dueDateTimeMeeting.text = it.jamSelesai
 
-                val dueDateTime = it.dueDate?.split(" ")
-                val dueDate = dueDateTime?.get(0)
-                val dueTime = dueDateTime?.get(0)
-                binding.dueDateTimeEvent.text = "$dueDate - $dueTime"
+                when (it.statusRapat) {
+                    "0" -> binding.statusMeeting.text = "Selesai"
+                    "1" -> {
+                        with(binding.statusMeeting) {
+                            text = "Belum Dimulai"
+                            background =
+                                ContextCompat.getDrawable(this@DetailActivity, R.color.colorDanger)
+                        }
+                    }
+                    "2" -> {
+                        with(binding.statusMeeting) {
+                            text = "Proses"
+                            background =
+                                ContextCompat.getDrawable(this@DetailActivity, R.color.colorIndigo)
+                        }
+                    }
+                    "3" -> binding.statusMeeting.text = "Disetujui\nPimpinan"
+                }
 
-                binding.descEvent.text = it.description
-                binding.countParticipantRegistration.text = it.participant.toString()
-                binding.countParticipantCome.text = it.participantIsComing.toString()
+                when (it.openForum) {
+                    "0" -> {
+                        binding.rvForum.visibility = View.GONE
+                        binding.messageForum.visibility = View.VISIBLE
+                    }
+                    "1" -> {
+                        binding.rvForum.visibility = View.VISIBLE
+                        binding.messageForum.visibility = View.GONE
+                    }
+                }
 
-                checkIfCreator(it.userId)
             }
         })
+
+        viewModel.getForum().observe(this, {
+            if (it.isNullOrEmpty()) {
+                binding.messageForum.visibility = View.VISIBLE
+            } else {
+                binding.messageForum.visibility = View.GONE
+                adapter.setData(it)
+            }
+        })
+    }
+
+    private fun setRecyclerView() {
+        adapter = ForumAdapter(object : ForumAdapter.ActionCallback {
+            override fun like(forum: ForumEntity) {
+                showSelectedData(forum)
+            }
+
+            override fun comment(forum: ForumEntity) {
+                startActivity(Intent(this@DetailActivity, ForumDetailActivity::class.java).apply {
+                    putExtra(ForumDetailActivity.FORUM_DETAIL_EXTRAS, forum)
+                })
+            }
+        }).apply {
+            notifyDataSetChanged()
+        }
+
+        binding.rvForum.layoutManager = LinearLayoutManager(this)
+        binding.rvForum.adapter = adapter
+    }
+
+    private fun showSelectedData(forum: ForumEntity) {
+        Toast.makeText(this, "comment forum id ${forum.id}", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -133,38 +177,33 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        finish()
-//        return true
-//    }
-
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.layout_participant_registration -> {
-                val bundle = Bundle().apply {
-                    dataEvent?.id?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
-                    putBoolean(ParticipantListDialogFragment.IS_COMING, false)
-                }
-                ParticipantListDialogFragment().apply {
-                    arguments = bundle
-                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
-                }
-            }
-            R.id.layout_participant_come -> {
-                val bundle = Bundle().apply {
-                    dataEvent?.id?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
-                    putBoolean(ParticipantListDialogFragment.IS_COMING, true)
-                }
-                ParticipantListDialogFragment().apply {
-                    arguments = bundle
-                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
-                }
-            }
-            R.id.layout_scan -> {
-                startActivity(Intent(this, ScannerActivity::class.java).apply {
-                    putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
-                })
-            }
+//            R.id.layout_participant_registration -> {
+//                val bundle = Bundle().apply {
+//                    dataEvent?.idRapat?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
+//                    putBoolean(ParticipantListDialogFragment.IS_COMING, false)
+//                }
+//                ParticipantListDialogFragment().apply {
+//                    arguments = bundle
+//                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
+//                }
+//            }
+//            R.id.layout_participant_come -> {
+//                val bundle = Bundle().apply {
+//                    dataEvent?.idRapat?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
+//                    putBoolean(ParticipantListDialogFragment.IS_COMING, true)
+//                }
+//                ParticipantListDialogFragment().apply {
+//                    arguments = bundle
+//                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
+//                }
+//            }
+//            R.id.layout_scan -> {
+//                startActivity(Intent(this, ScannerActivity::class.java).apply {
+//                    putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
+//                })
+//            }
             R.id.ib_back -> {
                 finish()
             }
