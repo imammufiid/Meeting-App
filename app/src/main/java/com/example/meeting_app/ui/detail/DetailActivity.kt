@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
     private lateinit var loading: ProgressDialog
-    private var dataEvent: MeetingEntity? = null
+    private var dataMeeting: MeetingEntity? = null
     private lateinit var adapter: ForumAdapter
 
     companion object {
@@ -44,15 +44,13 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         setRecyclerView()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     private fun init() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Detail Rapat"
         loading = ProgressDialog(this)
+
+        binding.btnAddForum.visibility = View.VISIBLE
 
         viewModel = ViewModelProvider(
             this,
@@ -71,13 +69,12 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setParcelable() {
-        dataEvent = intent.getParcelableExtra(EXTRAS_DATA)
+        dataMeeting = intent.getParcelableExtra(EXTRAS_DATA)
     }
 
     private fun observeViewModel() {
-        dataEvent?.let {
-            viewModel.getRapatById(UserPref.getUserData(this)?.idUser, dataEvent?.idRapat)
-            viewModel.getForumByRapatId(dataEvent?.idRapat)
+        dataMeeting?.let {
+            viewModel.getRapatById(UserPref.getUserData(this)?.idUser, dataMeeting?.idRapat)
         }
 
         viewModel.getMeeting().observe(this, Observer {
@@ -111,12 +108,17 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
                 when (it.openForum) {
                     "0" -> {
-                        binding.rvForum.visibility = View.GONE
+                        binding.btnAddForum.visibility = View.GONE
                         binding.messageForum.visibility = View.VISIBLE
                     }
                     "1" -> {
-                        binding.rvForum.visibility = View.VISIBLE
-                        binding.messageForum.visibility = View.GONE
+                        viewModel.getForumByRapatId(it.idRapat)
+
+                        if (it.statusRapat != "2") {
+                            binding.btnAddForum.visibility = View.GONE
+                        } else {
+                            binding.btnAddForum.visibility = View.VISIBLE
+                        }
                     }
                 }
 
@@ -189,30 +191,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 //                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
 //                }
 //            }
-//            R.id.layout_participant_come -> {
-//                val bundle = Bundle().apply {
-//                    dataEvent?.idRapat?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
-//                    putBoolean(ParticipantListDialogFragment.IS_COMING, true)
-//                }
-//                ParticipantListDialogFragment().apply {
-//                    arguments = bundle
-//                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
-//                }
-//            }
-//            R.id.layout_scan -> {
-//                startActivity(Intent(this, ScannerActivity::class.java).apply {
-//                    putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
-//                })
-//            }
-            R.id.ib_back -> {
-                finish()
+            R.id.btn_add_forum -> {
+                Toast.makeText(this, "Tambah Forum", Toast.LENGTH_SHORT).show()
             }
-//            R.id.ib_edit -> {
-//                startActivity(Intent(this, FormActivity::class.java).apply {
-//                    putExtra(FormActivity.IS_UPDATE, true)
-//                    putExtra(FormActivity.EXTRAS_DATA, dataEvent)
-//                })
-//            }
         }
 
     }
