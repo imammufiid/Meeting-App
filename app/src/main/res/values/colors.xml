@@ -13,5 +13,8 @@
     <color name="colorIndigo">#303F9F</color>
     <color name="colorBlueMidnight">#003366</color>
     <color name="colorGrey">#C9C9C9</color>
+    <color name="colorGreyLight">#F1EFEF</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorDanger">#DA2F2F</color>
 </resources>

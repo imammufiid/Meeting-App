@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Up-Send</string>
+    <string name="app_name">Meeting-App</string>
 
     <!--Titles-->
     <string name="onboarding_slide1_title">Selamat Datang di Up-Send</string>
@@ -31,13 +31,15 @@
     <string name="last_name">Nama Belakang</string>
     <string name="email">Email</string>
     <string name="confirm_password">Konfirmasi Password</string>
-    <string name="title_event">Title Event</string>
+    <string name="title_event">Title Meeting</string>
     <string name="datetime_event">DateTime Event</string>
-    <string name="status_event">Status Event</string>
+    <string name="date_event">Date Event</string>
+    <string name="date">12-12-2021</string>
+    <string name="status_event">Status Meeting</string>
     <string name="description_event">Kamu juga bisa melihat siapa saja yang hadir di eventmu. Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi. Jadwal eventmu akan kami kelola dengan baik</string>
     <string name="text_description_event">Deskripsi</string>
-    <string name="text_dateTime_event">Tanggal - Waktu</string>
-    <string name="dateTime_event">01-01-2020 - 09:00</string>
+    <string name="text_dateTime_event">Waktu Acara</string>
+    <string name="dateTime_event">09:00:00</string>
     <string name="participant_registration">Peserta Daftar</string>
     <string name="participant_come">Peserta Hadir</string>
     <string name="scan_qr">Scan QR</string>
@@ -51,10 +53,10 @@
     <string name="due_time">Waktu Selesai</string>
     <string name="simple_message">Message</string>
     <string name="search_event">Cari Eventmu dan Ikuti</string>
-    <string name="data_not_found">Kamu tidak memiliki Event</string>
+    <string name="data_not_found">Rapat Kosong</string>
     <string name="not_have_participant">Belum ada peserta</string>
     <string name="text_capasity_event">Kapasitas</string>
-    <string name="event_detail_title">Detail Event</string>
+    <string name="event_detail_title">Detail Rapat</string>
     <string name="profile">Profil</string>
     <string name="logout">Keluar</string>
     <string name="event_created">Event Dibuat</string>
@@ -68,4 +70,17 @@
     <string name="loading">Loading...</string>
     <string name="login_success">Berhasil Login</string>
     <string name="registration_success">Berhasil Registrasi</string>
+    <string name="home">Beranda</string>
+    <string name="keterangan_meeting">RAPAT/5/14052021/001</string>
+    <string name="title_from_meeting">Dari :</string>
+    <string name="title_date_meeting">Tanggal : </string>
+    <string name="title_status_meeting">Status :</string>
+    <string name="action">Aksi</string>
+    <string name="show_forum">Lihat Forum</string>
+    <string name="show_absensi">Daftar Absen</string>
+    <string name="title_forum">Forum</string>
+    <string name="comment">saya izin bertanya untuk menampilkan data yang punya kesamaan value tapi hanya satu saja gimana ya. saya izin bertanya untuk menampilkan data yang punya kesamaan value tapi hanya satu saja gimana ya.</string>
+    <string name="message_access_forum">Tidak ada akses forum</string>
+    <string name="title_room_meeting">Ruang :</string>
+    <string name="room">Ruang Meeting</string>
 </resources>
