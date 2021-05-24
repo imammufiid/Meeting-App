@@ -13,55 +13,50 @@
         android:layout_height="match_parent"
         app:layout_scrollFlags="scroll|enterAlways">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linear_search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/title_appbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <ImageButton
-                android:id="@+id/ib_scan"
+                android:id="@+id/ib_filter"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_scan"
-                android:contentDescription="@string/app_name"
-                android:padding="10dp"
-                android:src="@drawable/icscan_svg" />
-
-            <SearchView
-                android:id="@+id/sv_home"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_weight="50"
-                android:background="@drawable/shape_sv"
-                android:iconifiedByDefault="true"
-                android:queryBackground="@null"
-                android:queryHint="@string/search_event"
-                android:searchIcon="@drawable/ic_sv"
-                android:theme="@style/SearchViewTheme" />
-
-            <ImageButton
-                android:id="@+id/ib_add"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_add" />
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_filter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_setting"/>
 
             <ImageButton
                 android:id="@+id/ib_setting"
                 android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/app_name"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_setting" />
-        </LinearLayout>
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/ic_setting"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>
