@@ -22,6 +22,9 @@ data class ForumEntity(
 	@field:SerializedName("id_user")
 	val idUser: String? = null,
 
+	@field:SerializedName("user")
+	val user: UserEntity? = null,
+
 	@field:SerializedName("isi")
 	val isi: String? = null,
 
