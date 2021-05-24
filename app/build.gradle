@@ -49,6 +49,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
     implementation "androidx.cardview:cardview:$cardViewVersion"
     implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     // image
     implementation "com.github.bumptech.glide:glide:$glideVersion"
