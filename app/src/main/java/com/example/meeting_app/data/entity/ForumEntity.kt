@@ -35,5 +35,8 @@ data class ForumEntity(
 	val likes: List<String?>? = null,
 
 	@field:SerializedName("total_reply")
-	val totalReply: Int? = null
+	val totalReply: Int? = null,
+
+	@field:SerializedName("reply")
+	val replies: List<ReplyEntity>? = null
 ) : Parcelable
