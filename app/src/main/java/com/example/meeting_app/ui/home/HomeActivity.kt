@@ -7,20 +7,17 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.SearchView.OnQueryTextListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
-import com.example.meeting_app.data.entity.EventEntity
+import com.example.meeting_app.data.entity.MeetingEntity
 import com.example.meeting_app.databinding.ActivityHomeBinding
 import com.example.meeting_app.ui.detail.DetailActivity
-import com.example.meeting_app.ui.event.EventActivity
 import com.example.meeting_app.ui.login.LoginActivity
 import com.example.meeting_app.ui.profile.ProfileActivity
 import com.example.meeting_app.ui.scanner.ScannerActivity
@@ -30,7 +27,7 @@ import com.example.meeting_app.utils.pref.UserPref
 class HomeActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
-    private lateinit var adapter: EventAdapter
+    private lateinit var adapter: MettingAdapter
 
     companion object {
         const val ACTIVITY_NAME = "HomeActivity"
@@ -41,25 +38,24 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        // view pager tabs
-//        val pagerAdapter = SectionPagerAdapter(this, supportFragmentManager)
-//        activityHomeBinding.viewPager.adapter = pagerAdapter
-//        activityHomeBinding.tabs.setupWithViewPager(activityHomeBinding.viewPager)
         initSupportActionBar()
         init()
         checkPermission()
         showDataEvent()
         setRecyclerView()
-        showDataBySearch()
+        swipeRefreshGesture()
 
+    }
+
+    private fun swipeRefreshGesture() {
+        binding.swipeRefresh.setOnRefreshListener {
+            showDataEvent()
+        }
     }
 
     override fun onResume() {
         super.onResume()
         checkLogin()
-        binding.include.svHome.setQuery("", false)
-        binding.include.svHome.isIconified = true
     }
 
     private fun checkLogin() {
@@ -77,25 +73,25 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             this,
             ViewModelProvider.NewInstanceFactory()
         )[HomeViewModel::class.java]
-        viewModel.getState().observer(this, Observer {
+        viewModel.getState().observer(this, {
             handlerUIState(it)
         })
 
-        binding.include.ibScan.setOnClickListener(this)
+        binding.ibScan.setOnClickListener(this)
         binding.include.ibSetting.setOnClickListener(this)
-        binding.include.ibAdd.setOnClickListener(this)
+        binding.include.ibFilter.setOnClickListener(this)
     }
 
-    private fun handlerUIState(it: EventState?) {
+    private fun handlerUIState(it: MeetingState?) {
         when (it) {
-            is EventState.IsLoading -> showLoading(it.state)
-            is EventState.Error -> showToast(it.err, false)
-            is EventState.IsSuccess -> showToast(it.message)
+            is MeetingState.IsLoading -> showLoading(it.state)
+            is MeetingState.Error -> showToast(it.err, false)
+            is MeetingState.IsSuccess -> showToast(it.message)
         }
     }
 
     private fun setRecyclerView() {
-        adapter = EventAdapter { event ->
+        adapter = MettingAdapter(this) { event ->
             showSelectedData(event)
         }.apply {
             notifyDataSetChanged()
@@ -107,46 +103,23 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showDataEvent() {
         UserPref.getUserData(this)?.let {
-            it.token?.let { it1 -> Log.d("TOKEN", it1) }
-            viewModel.getAllDataByJoin(it.id, it.token)
+            viewModel.getMeetingData(it.idUser)
         }
 
-        viewModel.getEvents().observe(this, Observer {
+        viewModel.getMeetingData().observe(this, {
             if (it.isNullOrEmpty()) {
                 binding.tvMessage.visibility = View.VISIBLE
                 binding.tvMessage.text = getString(R.string.data_not_found)
             } else {
                 binding.tvMessage.visibility = View.GONE
-                adapter.setEvent(it)
+                adapter.setData(it)
             }
         })
-    }
-
-    private fun showDataBySearch() {
-        binding.include.svHome.setOnQueryTextListener(object : OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.getEventsBySearch(
-                    UserPref.getUserData(this@HomeActivity)?.token,
-                    query,
-                    UserPref.getUserData(this@HomeActivity)?.id
-                )
-                binding.include.svHome.clearFocus()
-                return true
-            }
-
-            override fun onQueryTextChange(query: String?): Boolean {
-                return false
-            }
-        })
-
-        binding.include.svHome.setOnCloseListener {
-            showDataEvent()
-            return@setOnCloseListener false
-        }
     }
 
     private fun initSupportActionBar() {
         setSupportActionBar(binding.include.toolbar)
+        binding.include.titleAppbar.text = getString(R.string.home)
     }
 
     private fun checkPermission() {
@@ -191,7 +164,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                                     setMessage(getString(R.string.question_logout))
                                         .setPositiveButton(getString(R.string.yes)) { _, _->
                                             UserPref.setIsLoggedIn(this@HomeActivity, false)
-                                            viewModel.logout(UserPref.getUserData(this@HomeActivity)?.token)
+                                            // viewModel.logout(UserPref.getUserData(this@HomeActivity)?.token)
                                             UserPref.clear(this@HomeActivity)
                                             Handler(mainLooper).postDelayed({
                                                 startActivity(Intent(this@HomeActivity, LoginActivity::class.java).apply {
@@ -216,18 +189,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                     putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
                 })
             }
-            R.id.ib_add -> {
-                startActivity(Intent(this, EventActivity::class.java))
-            }
         }
     }
 
     private fun showLoading(state: Boolean) {
-        if (state) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.swipeRefresh.isRefreshing = state
     }
 
     private fun showToast(message: String?, state: Boolean? = true) {
@@ -240,7 +206,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun showSelectedData(event: EventEntity) {
+    private fun showSelectedData(event: MeetingEntity) {
         startActivity(Intent(this, DetailActivity::class.java).apply {
             putExtra(DetailActivity.EXTRAS_DATA, event)
         })

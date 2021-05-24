@@ -41,6 +41,12 @@ interface ApiServices {
         @Field("user_id") userId: Int?
     ): Observable<WrappedResponse<EventEntity>>
 
+    // GET MEETING DATA
+    @GET("peserta/rapat/{id_user}")
+    fun getMeeting(
+        @Path("id_user") idUser: String?
+    ): Observable<WrappedListResponses<MeetingEntity>>
+
     // GET EVENTS JOIN
     @Headers("Accept: application/json")
     @FormUrlEncoded

@@ -3,80 +3,61 @@ package com.example.meeting_app.ui.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.meeting_app.api.ApiConfig
-import com.example.meeting_app.data.entity.EventEntity
+import com.example.meeting_app.data.entity.MeetingEntity
 import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class HomeViewModel:ViewModel() {
-    private var events = MutableLiveData<List<EventEntity>>()
-    private var state: SingleLiveEvent<EventState> = SingleLiveEvent()
+    private var meeting = MutableLiveData<List<MeetingEntity>>()
+    private var state: SingleLiveEvent<MeetingState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
 
-    fun getAllDataByJoin(user_id: Int?, token: String?) {
-        state.value = EventState.IsLoading(true)
+    fun getMeetingData(idUser: String?) {
+        state.value = MeetingState.IsLoading(true)
         CompositeDisposable().add(
-            api.getListOfEventJoin("Bearer $token", user_id)
+            api.getMeeting(idUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        200 -> events.postValue(it.data)
-                        else -> state.value = EventState.Error(it.message)
+                        200 -> meeting.postValue(it.data)
+                        else -> state.value = MeetingState.Error(it.message)
                     }
-                    state.value = EventState.IsLoading()
+                    state.value = MeetingState.IsLoading()
                 }, {
-                    state.value = EventState.Error(it.message)
-                    state.value = EventState.IsLoading()
-                })
-        )
-    }
-
-    fun getEventsBySearch(token: String?, query: String?, userId: Int?) {
-        state.value = EventState.IsLoading(true)
-        CompositeDisposable().add(
-            api.getEventBySearch("Bearer $token", query, userId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    when(it.status) {
-                        200 -> events.postValue(it.data)
-                        else -> state.value = EventState.Error(it.message)
-                    }
-                    state.value = EventState.IsLoading()
-                }, {
-                    state.value = EventState.Error(it.message)
-                    state.value = EventState.IsLoading()
+                    state.value = MeetingState.Error(it.message)
+                    state.value = MeetingState.IsLoading()
                 })
         )
     }
 
     fun logout(token: String?, userId: Int? = null) {
-        state.value = EventState.IsLoading(true)
+        state.value = MeetingState.IsLoading(true)
         CompositeDisposable().add(
             api.logout("Bearer $token", userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        200 -> state.value = EventState.IsSuccess(it.message)
-                        else -> state.value = EventState.Error(it.message)
+                        200 -> state.value = MeetingState.IsSuccess(it.message)
+                        else -> state.value = MeetingState.Error(it.message)
                     }
-                    state.value = EventState.IsLoading()
+                    state.value = MeetingState.IsLoading()
                 }, {
-                    state.value = EventState.Error(it.message)
-                    state.value = EventState.IsLoading()
+                    state.value = MeetingState.Error(it.message)
+                    state.value = MeetingState.IsLoading()
                 })
         )
     }
 
 
-    fun getEvents() = events
+    fun getMeetingData() = meeting
     fun getState() = state
 }
-sealed class EventState() {
-    data class IsLoading(var state: Boolean = false): EventState()
-    data class IsSuccess(var message: String?): EventState()
-    data class Error(var err: String?): EventState()
+sealed class MeetingState() {
+    data class IsLoading(var state: Boolean = false): MeetingState()
+    data class IsSuccess(var message: String?): MeetingState()
+    data class Error(var err: String?): MeetingState()
 }
