@@ -19,12 +19,8 @@ class LoginViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when (it.status) {
-                        200 -> {
-                            state.value = it.data?.let { data -> AuthState.IsSuccess(data) }
-                        }
-                        else -> {
-                            state.value = AuthState.IsFailed(it.message)
-                        }
+                        200 -> state.value = it.data?.let { data -> AuthState.IsSuccess(data) }
+                        else -> state.value = AuthState.IsFailed(it.message)
                     }
                     state.value = AuthState.IsLoading()
                 }, {

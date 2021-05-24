@@ -42,11 +42,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun init() {
         binding.btnLogin.setOnClickListener(this)
-        binding.btnRegistration.setOnClickListener(this)
         loading = ProgressDialog(this)
         
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[LoginViewModel::class.java]
-        viewModel.getState().observer(this, Observer { 
+        viewModel.getState().observer(this, {
             handleUIState(it)
         })
     }
@@ -92,9 +91,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     viewModel.login(email, password)
                 }
             }
-//            R.id.btn_registration -> {
-//                startActivity(Intent(this, RegistrationActivity::class.java))
-//            }
         }
     }
 

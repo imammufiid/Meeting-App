@@ -90,17 +90,6 @@
             android:text="@string/login"
             android:textColor="@color/colorTextIcon" />
 
-        <Button
-            android:id="@+id/btn_registration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="24dp"
-            android:text="@string/register_account"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark" />
-
     </LinearLayout>
 
 
