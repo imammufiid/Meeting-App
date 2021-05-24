@@ -1,45 +1,54 @@
-package com.example.meeting_app.ui.event
+package com.example.meeting_app.ui.forum_detail
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
-import com.example.meeting_app.data.entity.EventEntity
-import com.example.meeting_app.databinding.ActivityEventBinding
+import com.example.meeting_app.data.entity.ForumEntity
+import com.example.meeting_app.data.entity.MeetingEntity
+import com.example.meeting_app.databinding.ActivityForumDetailBinding
 import com.example.meeting_app.ui.detail.DetailActivity
 import com.example.meeting_app.utils.helper.CustomView
-import com.example.meeting_app.utils.pref.UserPref
 
-class EventActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityEventBinding
+class ForumDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityForumDetailBinding
     private lateinit var viewModel: EventViewModel
-    private lateinit var adapter: EventAdapter
+    private lateinit var adapter: ForumDetailAdapter
+    private var dataForum: ForumEntity? = null
+
+    companion object {
+        const val FORUM_DETAIL_EXTRAS = "forum_detail_extras"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEventBinding.inflate(layoutInflater)
+        binding = ActivityForumDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         init()
+        observeViewModel()
+        setRecyclerView()
+        setDataFromParcelable()
     }
 
-    override fun onResume() {
-        super.onResume()
-        showDataEvent()
-        setRecyclerView()
+    private fun setDataFromParcelable() {
+        binding.include.user.text = dataForum?.user?.nama
+        binding.include.comment.text = dataForum?.isi
+        binding.include.totalLikes.text = "${dataForum?.likesCount} suka"
+        binding.include.totalReply.text = "${dataForum?.totalReply} balasan"
     }
 
     private fun init() {
-        binding.fabAddEvent.setOnClickListener(this)
-        binding.include.ibBack.setOnClickListener(this)
-        binding.include.titleAppBar.text = "Eventku"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = getString(R.string.title_detail_forum)
+
+        dataForum = intent.getParcelableExtra(FORUM_DETAIL_EXTRAS)
+
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[EventViewModel::class.java]
-        viewModel.getState().observer(this, Observer {
+        viewModel.getState().observer(this, {
             handlerUIState(it)
         })
     }
@@ -52,9 +61,7 @@ class EventActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setRecyclerView() {
-        adapter = EventAdapter { event ->
-            showSelectedData(event)
-        }.apply {
+        adapter = ForumDetailAdapter().apply {
             notifyDataSetChanged()
         }
 
@@ -62,19 +69,17 @@ class EventActivity : AppCompatActivity(), View.OnClickListener {
         binding.rvEvents.adapter = adapter
     }
 
-    private fun showDataEvent() {
-        UserPref.getUserData(this)?.let {
-            it.token?.let { it1 -> Log.d("TOKEN", it1) }
-            viewModel.getAllDataEventByCreated(it.id, it.token)
-        }
+    private fun observeViewModel() {
+        viewModel.getDetailForum(dataForum?.idRapat?.toInt(), dataForum?.id?.toInt())
 
-        viewModel.getEvents().observe(this, Observer {
-            if (it.isNullOrEmpty()) {
+        viewModel.getDetailForum().observe(this, {
+            // set replies forum
+            if (it.replies.isNullOrEmpty()) {
                 binding.tvMessage.visibility = View.VISIBLE
-                binding.tvMessage.text = getString(R.string.data_not_found)
+                binding.tvMessage.text = getString(R.string.replies_empty)
             } else {
                 binding.tvMessage.visibility = View.GONE
-                adapter.setEvent(it)
+                adapter.setEvent(it.replies)
             }
         })
     }
@@ -97,20 +102,9 @@ class EventActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun showSelectedData(event: EventEntity) {
+    private fun showSelectedData(event: ForumEntity) {
         startActivity(Intent(this, DetailActivity::class.java).apply {
             putExtra(DetailActivity.EXTRAS_DATA, event)
         })
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.fab_add_event -> {
-//                startActivity(Intent(this, FormActivity::class.java))
-            }
-            R.id.ib_back -> {
-                finish()
-            }
-        }
     }
 }

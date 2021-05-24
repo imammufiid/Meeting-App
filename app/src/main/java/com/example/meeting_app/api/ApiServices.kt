@@ -47,37 +47,12 @@ interface ApiServices {
         @Path("id_user") idUser: String?
     ): Observable<WrappedListResponses<MeetingEntity>>
 
-    // GET EVENTS JOIN
-    @Headers("Accept: application/json")
-    @FormUrlEncoded
-    @POST("event/participant/events")
-    fun getListOfEventJoin(
-        @Header("Authorization") token: String?,
-        @Field("user_id") userId: Int?
-    ): Observable<WrappedListResponses<EventEntity>>
-
-    // GET LIST PARTICIPANT JOIN
-    @FormUrlEncoded
-    @POST("event/participant")
-    fun getListOfParticipantJoin(
-        @Header("Authorization") token: String?,
-        @Field("event_id") eventId: Int?
-    ): Observable<WrappedListResponses<UserEntity>>
-
-    // GET LIST PARTICIPANT JOIN
-    @FormUrlEncoded
-    @POST("event/participant/come")
-    fun getListOfParticipantCome(
-        @Header("Authorization") token: String?,
-        @Field("event_id") eventId: Int?
-    ): Observable<WrappedListResponses<UserEntity>>
-
-    // GET EVENTS CREATED
-    @GET("event/")
-    fun getListOfEventCreated(
-        @Header("Authorization") token: String?,
-        @Query("user_id") userId: Int?
-    ): Observable<WrappedListResponses<EventEntity>>
+    // GET DETAIL FORUM
+    @GET("peserta/forum/{id_rapat}/{id}")
+    fun getDetailForum(
+        @Path("id_rapat") idRapat: Int?,
+        @Path("id") id: Int?
+    ): Observable<WrappedResponse<ForumEntity>>
 
     // GET SHOW MEETING
     @GET("peserta/rapat/{id_user}/{id_rapat}")

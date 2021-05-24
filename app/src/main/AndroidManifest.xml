@@ -23,11 +23,12 @@
             android:name="com.example.meeting_app.ui.scanner.ScannerActivity"
             android:theme="@style/Theme.NoActionBar" />
         <activity
-            android:name="com.example.meeting_app.ui.event.EventActivity"
-            android:theme="@style/Theme.NoActionBar" />
+            android:name="com.example.meeting_app.ui.forum_detail.ForumDetailActivity"
+            android:parentActivityName=".ui.detail.DetailActivity"/>
         <activity
             android:name="com.example.meeting_app.ui.detail.DetailActivity"
-            android:parentActivityName=".ui.home.HomeActivity"/>
+            android:parentActivityName=".ui.home.HomeActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name="com.example.meeting_app.ui.home.HomeActivity"
             android:theme="@style/Theme.NoActionBar"
