@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
 import com.example.meeting_app.data.entity.MeetingEntity
+import com.example.meeting_app.data.entity.UserEntity
 import com.example.meeting_app.databinding.ActivityDetailBinding
+import com.example.meeting_app.ui.bottomsheetform.BottomSheetForm
 import com.example.meeting_app.ui.forum_detail.ForumDetailActivity
 import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
@@ -50,7 +52,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.title = "Detail Rapat"
         loading = ProgressDialog(this)
 
-        binding.btnAddForum.visibility = View.VISIBLE
+        binding.btnAddForum.setOnClickListener(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -179,6 +181,16 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    internal var buttonListener: BottomSheetForm.ButtonListener =
+        object : BottomSheetForm.ButtonListener {
+            override fun add(comment: String?) {
+                adapter.addOneItem(
+                    ForumEntity(
+                    user = UserEntity(nama = "Imam"), isi = comment
+                ),0)
+            }
+        }
+
     override fun onClick(v: View?) {
         when (v?.id) {
 //            R.id.layout_participant_registration -> {
@@ -192,7 +204,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 //                }
 //            }
             R.id.btn_add_forum -> {
-                Toast.makeText(this, "Tambah Forum", Toast.LENGTH_SHORT).show()
+                BottomSheetForm().show(
+                    supportFragmentManager, BottomSheetForm.TAG
+                )
             }
         }
 
