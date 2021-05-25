@@ -19,7 +19,7 @@ class BottomSheetForm : BottomSheetDialogFragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _bind = FragmentBottomSheetFormListDialogBinding.inflate(layoutInflater, container, false)
         return _bind.root
     }
