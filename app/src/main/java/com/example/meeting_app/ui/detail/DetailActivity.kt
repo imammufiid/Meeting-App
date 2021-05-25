@@ -3,12 +3,10 @@ package com.example.meeting_app.ui.detail
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
@@ -20,6 +18,7 @@ import com.example.meeting_app.ui.bottomsheetform.BottomSheetForm
 import com.example.meeting_app.ui.forum_detail.ForumDetailActivity
 import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
+import kotlinx.android.synthetic.main.forum_box.*
 import kotlinx.android.synthetic.main.item_meeting.view.*
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
