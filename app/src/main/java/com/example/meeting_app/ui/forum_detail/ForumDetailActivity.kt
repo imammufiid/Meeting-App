@@ -71,10 +71,19 @@ class ForumDetailActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
-    private fun handlerUIState(it: EventState?) {
+    private fun handlerUIState(it: ReplyState?) {
         when (it) {
-            is EventState.IsLoading -> showLoading(it.state)
-            is EventState.Error -> showToast(it.err)
+            is ReplyState.IsLoading -> showLoading(it.state)
+            is ReplyState.Error -> showToast(it.err)
+            is ReplyState.ReplyForum -> replyForum(it.message, it.data)
+        }
+    }
+
+    private fun replyForum(message: String?, data: ReplyEntity?) {
+        CustomView.customToast(this, message, true, isSuccess = true)
+        if (data != null) {
+            binding.tvMessage.visibility = View.GONE
+            adapter.addOneItem(data)
         }
     }
 
