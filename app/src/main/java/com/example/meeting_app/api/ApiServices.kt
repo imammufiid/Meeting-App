@@ -73,12 +73,25 @@ interface ApiServices {
         @Field("isi") isi: String?
     ): Observable<WrappedResponse<ReplyEntity>>
 
-    // GET LIST PARTICIPANT JOIN
-//    @FormUrlEncoded
-//    @POST("event/scan")
-//    fun scanQRCode(
-//        @Header("Authorization") token: String?,
-//        @Field("user_id") userId: Int?,
-//        @Field("code_event") codeEvent: String?
-//    ): Observable<WrappedResponse<EventEntity>>
+    // GET USER
+    @GET("peserta/user/{id_user}")
+    fun getUser(
+        @Path("id_user") idUser: String?,
+    ): Observable<WrappedResponse<UserEntity>>
+
+    // EDIT PROFILE
+    @FormUrlEncoded
+    @PUT("peserta/user/{id_user}")
+    fun editProfile(
+        @Path("id_user") idUser: String?,
+        @Field("nama") name: String?,
+        @Path("password") password: String?,
+    ): Observable<WrappedResponse<UserEntity>>
+
+    // ATTENDANCE
+    @FormUrlEncoded
+    @POST("peserta/absen")
+    fun attendance(
+        @Field("code") code: String?,
+    ): Observable<WrappedResponse<MeetingEntity>>
 }
