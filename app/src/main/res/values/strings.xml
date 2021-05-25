@@ -95,4 +95,12 @@
     <string name="like_a_little">Suka Tersedikit</string>
     <string name="comment_a_most">Balasan Terbanyak</string>
     <string name="comment_a_little">Balasan Tersedikit</string>
+    <string name="reply">Balas</string>
+    <string name="done">Selesai</string>
+    <string name="not_yet_start">Belum Dimulai</string>
+    <string name="process">Proses</string>
+    <string name="approved">Disetujui\nPimpinan</string>
+    <string name="like">%s suka</string>
+    <string name="replied">%s balasan</string>
+    <string name="date_time">%1$s / %2$s</string>
 </resources>
