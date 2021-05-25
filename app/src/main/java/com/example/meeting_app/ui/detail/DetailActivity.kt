@@ -79,17 +79,20 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private fun addForum(message: String?, data: ForumEntity?) {
         CustomView.customToast(this, message, true, isSuccess = true)
 
-        Log.d("DATA_ADD_FORUM", data.toString())
         if (data != null) {
+            val likes = data.likesCount ?: 0
+            val replies = data.totalReply ?: 0
+
             val newData = ForumEntity(
                 id = data.id,
                 isi = data.isi,
                 idUser = data.idUser,
                 idRapat = data.idRapat,
                 user = UserEntity(nama = data.user?.nama),
-                waktu = data.waktu
+                waktu = data.waktu,
+                likesCount = likes,
+                totalReply = replies
             )
-            Log.d("DATA_ADD_FORUM", newData.toString())
             adapter.addOneItem(newData, 0)
         }
 
