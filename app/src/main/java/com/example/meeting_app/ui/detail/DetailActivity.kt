@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -248,7 +249,38 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
             R.id.btn_filter -> {
-
+                PopupMenu(this, binding.btnFilter).apply {
+                    inflate(R.menu.menu_filter)
+                    setOnMenuItemClickListener {
+                        when (it.itemId) {
+                            R.id.latest -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                time = ASC
+                            )
+                            R.id.oldest -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                time = DESC
+                            )
+                            R.id.like_a_most -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                like = ASC
+                            )
+                            R.id.like_a_little -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                like = DESC
+                            )
+                            R.id.comment_a_most -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                reply = ASC
+                            )
+                            R.id.comment_a_little -> viewModel.getForumByRapatId(
+                                dataMeeting?.idRapat,
+                                reply = DESC
+                            )
+                        }
+                        return@setOnMenuItemClickListener false
+                    }
+                }.show()
             }
         }
 
