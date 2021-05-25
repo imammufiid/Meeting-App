@@ -62,7 +62,10 @@ class ForumDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         dataForum = intent.getParcelableExtra(FORUM_DETAIL_EXTRAS)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[EventViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[EventViewModel::class.java]
         viewModel.getState().observer(this, {
             handlerUIState(it)
         })
