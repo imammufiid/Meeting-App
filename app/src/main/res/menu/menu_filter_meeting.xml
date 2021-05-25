@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/done"
+        android:title="@string/done"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/not_yet_start"
+        android:title="@string/not_yet_start"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/process"
+        android:title="@string/process"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/approve_leader"
+        android:title="@string/approved_leader"
+        app:showAsAction="never"/>
+</menu>

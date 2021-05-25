@@ -103,4 +103,5 @@
     <string name="like">%s suka</string>
     <string name="replied">%s balasan</string>
     <string name="date_time">%1$s / %2$s</string>
+    <string name="approved_leader">Disetujui Pimpinan</string>
 </resources>

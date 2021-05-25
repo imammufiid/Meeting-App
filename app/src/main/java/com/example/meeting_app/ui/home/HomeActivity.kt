@@ -30,6 +30,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val ACTIVITY_NAME = "HomeActivity"
+        const val DONE = 0
+        const val PROCESS = 1
+        const val NOT_YET_START = 2
+        const val APPROVED = 3
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +62,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkLogin() {
-        UserPref.getIsLoggedIn(this)?.let {
+        UserPref.getIsLoggedIn(this).let {
             if(!it) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
@@ -101,7 +105,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showDataEvent() {
-        UserPref.getUserData(this)?.let {
+        UserPref.getUserData(this).let {
             viewModel.getMeetingData(it.idUser)
         }
 
@@ -187,6 +191,32 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(Intent(this, ScannerActivity::class.java).apply {
                     putExtra(ScannerActivity.EXTRAS_ACTIVITY, ACTIVITY_NAME)
                 })
+            }
+            R.id.ib_filter -> {
+                PopupMenu(this, binding.include.ibSetting).apply {
+                    inflate(R.menu.setting_menu)
+                    setOnMenuItemClickListener {
+                        when(it.itemId) {
+                            R.id.done -> {
+                                val idUser = UserPref.getUserData(this@HomeActivity).idUser
+                                viewModel.getMeetingData(idUser, DONE)
+                            }
+                            R.id.not_yet_start -> {
+                                val idUser = UserPref.getUserData(this@HomeActivity).idUser
+                                viewModel.getMeetingData(idUser, NOT_YET_START)
+                            }
+                            R.id.process -> {
+                                val idUser = UserPref.getUserData(this@HomeActivity).idUser
+                                viewModel.getMeetingData(idUser, PROCESS)
+                            }
+                            R.id.approve_leader -> {
+                                val idUser = UserPref.getUserData(this@HomeActivity).idUser
+                                viewModel.getMeetingData(idUser, APPROVED)
+                            }
+                        }
+                        return@setOnMenuItemClickListener false
+                    }
+                }.show()
             }
         }
     }

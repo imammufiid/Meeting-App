@@ -14,10 +14,10 @@ class HomeViewModel:ViewModel() {
     private var state: SingleLiveEvent<MeetingState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
 
-    fun getMeetingData(idUser: String?) {
+    fun getMeetingData(idUser: String?, status: Int? = 0) {
         state.value = MeetingState.IsLoading(true)
         CompositeDisposable().add(
-            api.getMeeting(idUser)
+            api.getMeeting(idUser, status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
