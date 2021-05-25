@@ -39,9 +39,9 @@ class DetailViewModel() : ViewModel() {
 
     fun getForumByRapatId(
         idRapat: String?,
-        time: String? = DetailActivity.DESC,
-        like: String? = DetailActivity.DESC,
-        reply: String? = DetailActivity.DESC
+        time: String? = "",
+        like: String? = "",
+        reply: String? = ""
     ) {
         state.value = DetailState.IsLoadingProgressBar(true)
         CompositeDisposable().add(
