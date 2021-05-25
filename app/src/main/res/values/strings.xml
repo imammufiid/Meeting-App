@@ -104,4 +104,9 @@
     <string name="replied">%s balasan</string>
     <string name="date_time">%1$s / %2$s</string>
     <string name="approved_leader">Disetujui Pimpinan</string>
+    <string name="nip">NIP</string>
+    <string name="instance">Instansi</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="title_profile">Profil</string>
+    <string name="address_instance">Alamat Instansi</string>
 </resources>
