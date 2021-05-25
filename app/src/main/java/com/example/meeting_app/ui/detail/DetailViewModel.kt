@@ -12,9 +12,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class DetailViewModel() : ViewModel() {
     private var meeting = MutableLiveData<MeetingEntity>()
-    private var forum = MutableLiveData<List<ForumEntity>>()
+    private var forums = MutableLiveData<List<ForumEntity>>()
     private var state: SingleLiveEvent<DetailState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
+
 
 
     fun getRapatById(idUser: String?, eventId: String?) {
@@ -42,14 +43,33 @@ class DetailViewModel() : ViewModel() {
         like: String? = DetailActivity.DESC,
         reply: String? = DetailActivity.DESC
     ) {
-        state.value = DetailState.IsLoading(true)
+        state.value = DetailState.IsLoadingProgressBar(true)
         CompositeDisposable().add(
             api.getForumByRapatId(idRapat, time, like, reply)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        200 -> forum.postValue(it.data)
+                        200 -> forums.postValue(it.data)
+                        else -> state.value = DetailState.Error(it.message)
+                    }
+                    state.value = DetailState.IsLoadingProgressBar()
+                }, {
+                    state.value = DetailState.Error(it.message)
+                    state.value = DetailState.IsLoadingProgressBar()
+                })
+        )
+    }
+
+    fun likeForum(idForum: String?, idUser: String?) {
+        state.value = DetailState.IsLoading(true)
+        CompositeDisposable().add(
+            api.likeForum(idForum, idUser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when(it.status) {
+                        201 -> state.value = DetailState.LikeForum(it.message, it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
                     state.value = DetailState.IsLoading()
@@ -60,12 +80,34 @@ class DetailViewModel() : ViewModel() {
         )
     }
 
+    fun addForum(idRapat: String?, idUser: String?, isi: String?) {
+        state.value = DetailState.IsLoadingProgressBar(true)
+        CompositeDisposable().add(
+            api.addForum(idRapat, idUser, isi)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when(it.status) {
+                        201 -> state.value = DetailState.AddForum(it.message, it.data)
+                        else -> state.value = DetailState.Error(it.message)
+                    }
+                    state.value = DetailState.IsLoadingProgressBar()
+                }, {
+                    state.value = DetailState.Error(it.message)
+                    state.value = DetailState.IsLoadingProgressBar()
+                })
+        )
+    }
+
     fun getMeeting() = meeting
-    fun getForum() = forum
+    fun getForums() = forums
     fun getState() = state
 }
 
 sealed class DetailState() {
+    data class LikeForum(var message: String?, var data: ForumEntity?): DetailState()
+    data class AddForum(var message: String?, var data: ForumEntity?): DetailState()
     data class IsLoading(var state: Boolean = false): DetailState()
+    data class IsLoadingProgressBar(var state: Boolean = false): DetailState()
     data class Error(var err: String?): DetailState()
 }

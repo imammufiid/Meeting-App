@@ -3,8 +3,8 @@ package com.example.meeting_app.ui.detail
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -27,6 +27,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var loading: ProgressDialog
     private var dataMeeting: MeetingEntity? = null
     private lateinit var adapter: ForumAdapter
+    private var itemPositionLike: Int? = 0
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
@@ -49,10 +50,11 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private fun init() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Detail Rapat"
+        supportActionBar?.title = getString(R.string.title_meeting_detail)
         loading = ProgressDialog(this)
 
         binding.btnAddForum.setOnClickListener(this)
+        binding.btnFilter.setOnClickListener(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -66,8 +68,50 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private fun handlerUIState(it: DetailState?) {
         when (it) {
             is DetailState.IsLoading -> showLoading(it.state)
+            is DetailState.IsLoadingProgressBar -> showLoadingProgressBar(it.state)
             is DetailState.Error -> showToast(it.err, false)
+            is DetailState.LikeForum -> likeForum(it.message, it.data)
+            is DetailState.AddForum -> addForum(it.message, it.data)
         }
+    }
+
+    private fun addForum(message: String?, data: ForumEntity?) {
+        CustomView.customToast(this, message, true, isSuccess = true)
+
+        Log.d("DATA_ADD_FORUM", data.toString())
+        if (data != null) {
+            val newData = ForumEntity(
+                id = data.id,
+                isi = data.isi,
+                idUser = data.idUser,
+                idRapat = data.idRapat,
+                user = UserEntity(nama = data.user?.nama),
+                waktu = data.waktu
+            )
+            Log.d("DATA_ADD_FORUM", newData.toString())
+            adapter.addOneItem(newData, 0)
+        }
+
+    }
+
+    private fun likeForum(message: String?, data: ForumEntity?) {
+        CustomView.customToast(this, message, true, isSuccess = true)
+
+        if (data != null) {
+            val newData = ForumEntity(
+                id = data.id,
+                isi = data.isi,
+                idUser = data.idUser,
+                idRapat = data.idRapat,
+                user = UserEntity(nama = data.user?.nama),
+                likesCount = data.likesCount?.plus(1),
+                totalReply = data.totalReply,
+                likes = listOf(data.idUser),
+                waktu = data.waktu
+            )
+            itemPositionLike?.let { position -> adapter.changeItem(newData, position) }
+        }
+
     }
 
     private fun setParcelable() {
@@ -76,10 +120,10 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun observeViewModel() {
         dataMeeting?.let {
-            viewModel.getRapatById(UserPref.getUserData(this)?.idUser, dataMeeting?.idRapat)
+            viewModel.getRapatById(UserPref.getUserData(this).idUser, dataMeeting?.idRapat)
         }
 
-        viewModel.getMeeting().observe(this, Observer {
+        viewModel.getMeeting().observe(this, {
             if (it != null) {
                 binding.titleMeeting.text = it.temaRapat
                 binding.keteranganMeeting.text = it.keterangan
@@ -127,7 +171,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        viewModel.getForum().observe(this, {
+        viewModel.getForums().observe(this, {
             if (it.isNullOrEmpty()) {
                 binding.messageForum.visibility = View.VISIBLE
             } else {
@@ -138,9 +182,10 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setRecyclerView() {
-        adapter = ForumAdapter(object : ForumAdapter.ActionCallback {
-            override fun like(forum: ForumEntity) {
-                showSelectedData(forum)
+        adapter = ForumAdapter(this, object : ForumAdapter.ActionCallback {
+            override fun like(forum: ForumEntity, position: Int) {
+                itemPositionLike = position
+                viewModel.likeForum(forum.id, UserPref.getUserData(this@DetailActivity).idUser)
             }
 
             override fun comment(forum: ForumEntity) {
@@ -156,11 +201,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding.rvForum.adapter = adapter
     }
 
-    private fun showSelectedData(forum: ForumEntity) {
-        Toast.makeText(this, "comment forum id ${forum.id}", Toast.LENGTH_SHORT).show()
-    }
-
-
     private fun showLoading(state: Boolean) {
         if (state) {
             loading.setMessage("Loading...")
@@ -168,6 +208,14 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             loading.show()
         } else {
             loading.dismiss()
+        }
+    }
+
+    private fun showLoadingProgressBar(state: Boolean) {
+        if (state) {
+            binding.progressBarForum.visibility = View.VISIBLE
+        } else {
+            binding.progressBarForum.visibility = View.GONE
         }
     }
 
@@ -184,29 +232,23 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     internal var buttonListener: BottomSheetForm.ButtonListener =
         object : BottomSheetForm.ButtonListener {
             override fun add(comment: String?) {
-                adapter.addOneItem(
-                    ForumEntity(
-                    user = UserEntity(nama = "Imam"), isi = comment
-                ),0)
+                viewModel.addForum(
+                    dataMeeting?.idRapat,
+                    UserPref.getUserData(this@DetailActivity).idUser,
+                    comment
+                )
             }
         }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-//            R.id.layout_participant_registration -> {
-//                val bundle = Bundle().apply {
-//                    dataEvent?.idRapat?.let { putInt(ParticipantListDialogFragment.EVENT_ID, it) }
-//                    putBoolean(ParticipantListDialogFragment.IS_COMING, false)
-//                }
-//                ParticipantListDialogFragment().apply {
-//                    arguments = bundle
-//                    show(supportFragmentManager, ParticipantListDialogFragment.TAG)
-//                }
-//            }
             R.id.btn_add_forum -> {
                 BottomSheetForm().show(
                     supportFragmentManager, BottomSheetForm.TAG
                 )
+            }
+            R.id.btn_filter -> {
+
             }
         }
 

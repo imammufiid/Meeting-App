@@ -77,6 +77,15 @@
                 android:textStyle="bold"
                 android:layout_marginStart="12dp"
                 tools:text="7 comment" />
+
+            <TextView
+                android:id="@+id/date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondary"
+                android:textStyle="italic"
+                android:layout_marginStart="12dp"
+                tools:text="@string/dateTime_event" />
         </LinearLayout>
     </LinearLayout>
 
