@@ -3,26 +3,26 @@ package com.example.meeting_app.ui.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.meeting_app.api.ApiConfig
-import com.example.meeting_app.data.entity.CountEventEntity
+import com.example.meeting_app.data.entity.UserEntity
 import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class ProfileViewModel: ViewModel() {
-    private var count = MutableLiveData<CountEventEntity>()
+    private var user = MutableLiveData<UserEntity>()
     private var state: SingleLiveEvent<ProfileState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
 
-    fun setCountEvent(user_id: Int?, token: String?) {
+    fun getUser(idUser: String?) {
         state.value = ProfileState.IsLoading(true)
         CompositeDisposable().add(
-            api.getCountEvent("Bearer $token", user_id)
+            api.getUser(idUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        200 -> count.postValue(it.data)
+                        200 -> user.postValue(it.data)
                         else -> state.value = ProfileState.Error(it.message)
                     }
                     state.value = ProfileState.IsLoading()
@@ -33,15 +33,15 @@ class ProfileViewModel: ViewModel() {
         )
     }
 
-    fun logout(token: String?, userId: Int? = null) {
+    fun editUser(idUser: String?, username: String?, password: String?) {
         state.value = ProfileState.IsLoading(true)
         CompositeDisposable().add(
-            api.logout("Bearer $token", userId)
+            api.editProfile(idUser, username, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        200 -> state.value = ProfileState.IsSuccess(it.message)
+                        201 -> user.postValue(it.data)
                         else -> state.value = ProfileState.Error(it.message)
                     }
                     state.value = ProfileState.IsLoading()
@@ -52,12 +52,12 @@ class ProfileViewModel: ViewModel() {
         )
     }
 
-    fun getCountEvent() = count
+    fun getUser() = user
     fun getState() = state
 }
 
 sealed class ProfileState() {
     data class IsLoading(var state: Boolean = false): ProfileState()
-    data class IsSuccess(var message: String?): ProfileState()
+    data class IsSuccess(var message: String?, var data: UserEntity? = null): ProfileState()
     data class Error(var err: String?): ProfileState()
 }
