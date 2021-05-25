@@ -31,8 +31,8 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         const val ACTIVITY_NAME = "HomeActivity"
         const val DONE = 0
-        const val PROCESS = 1
-        const val NOT_YET_START = 2
+        const val NOT_YET_START = 1
+        const val PROCESS = 2
         const val APPROVED = 3
     }
 
@@ -194,7 +194,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.ib_filter -> {
                 PopupMenu(this, binding.include.ibSetting).apply {
-                    inflate(R.menu.setting_menu)
+                    inflate(R.menu.menu_filter_meeting)
                     setOnMenuItemClickListener {
                         when(it.itemId) {
                             R.id.done -> {
