@@ -37,8 +37,21 @@ class ForumDetailActivity : AppCompatActivity() {
     private fun setDataFromParcelable() {
         binding.include.user.text = dataForum?.user?.nama
         binding.include.comment.text = dataForum?.isi
-        binding.include.totalLikes.text = "${dataForum?.likesCount} suka"
-        binding.include.totalReply.text = "${dataForum?.totalReply} balasan"
+        binding.include.totalLikes.text = getString(R.string.like, dataForum?.likesCount.toString())
+        binding.include.totalReply.text =
+            getString(R.string.replied, dataForum?.totalReply.toString())
+
+        // date time
+        val dateTime = dataForum?.waktu?.split(" ")
+        val date = dateTime?.get(0)?.split("-")
+        val time = dateTime?.get(1)?.split(":") as ArrayList
+        time.removeAt(time.lastIndex)
+        binding.include.dateTime.text =
+            getString(
+                R.string.date_time,
+                date?.reversed()?.joinToString("-").toString(),
+                time.joinToString(":")
+            )
     }
 
     private fun init() {
