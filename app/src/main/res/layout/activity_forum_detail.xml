@@ -17,6 +17,14 @@
             android:id="@+id/include"
             layout="@layout/forum_box"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_reply"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
@@ -24,13 +32,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:visibility="gone"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_events"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_reply"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,7 +42,8 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_reply"
+        android:contentDescription="@string/floating_action_button" />
 
     <TextView
         android:id="@+id/tv_message"
