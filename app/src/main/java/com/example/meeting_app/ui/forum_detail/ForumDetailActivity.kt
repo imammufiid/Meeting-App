@@ -58,6 +58,8 @@ class ForumDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.title_detail_forum)
 
+        binding.fabAddReply.setOnClickListener(this)
+
         dataForum = intent.getParcelableExtra(FORUM_DETAIL_EXTRAS)
 
         viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[EventViewModel::class.java]
@@ -115,9 +117,30 @@ class ForumDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSelectedData(event: ForumEntity) {
-        startActivity(Intent(this, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.EXTRAS_DATA, event)
-        })
+    internal var buttonListener: BottomSheetForm.ButtonListener =
+        object : BottomSheetForm.ButtonListener {
+            override fun add(comment: String?) {
+                viewModel.replyForum(
+                    dataForum?.id,
+                    dataForum?.idRapat,
+                    UserPref.getUserData(this@ForumDetailActivity).idUser,
+                    comment
+                )
+            }
+        }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.fab_add_reply -> {
+                val bundle = Bundle().apply {
+                    putBoolean(BottomSheetForm.IS_REPLY, true)
+                }
+                BottomSheetForm().apply {
+                    arguments = bundle
+                }.show(
+                    supportFragmentManager, BottomSheetForm.TAG
+                )
+            }
+        }
     }
 }
