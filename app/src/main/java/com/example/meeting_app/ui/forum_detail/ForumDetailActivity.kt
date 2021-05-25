@@ -1,6 +1,5 @@
 package com.example.meeting_app.ui.forum_detail
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,12 +7,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
-import com.example.meeting_app.data.entity.MeetingEntity
+import com.example.meeting_app.data.entity.ReplyEntity
 import com.example.meeting_app.databinding.ActivityForumDetailBinding
-import com.example.meeting_app.ui.detail.DetailActivity
+import com.example.meeting_app.ui.bottomsheetform.BottomSheetForm
 import com.example.meeting_app.utils.helper.CustomView
+import com.example.meeting_app.utils.pref.UserPref
 
-class ForumDetailActivity : AppCompatActivity() {
+class ForumDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityForumDetailBinding
     private lateinit var viewModel: EventViewModel
     private lateinit var adapter: ForumDetailAdapter
