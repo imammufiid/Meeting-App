@@ -135,22 +135,22 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.dueDateTimeMeeting.text = it.jamSelesai
 
                 when (it.statusRapat) {
-                    "0" -> binding.statusMeeting.text = "Selesai"
+                    "0" -> binding.statusMeeting.text = getString(R.string.done)
                     "1" -> {
                         with(binding.statusMeeting) {
-                            text = "Belum Dimulai"
+                            text = getString(R.string.not_yet_start)
                             background =
                                 ContextCompat.getDrawable(this@DetailActivity, R.color.colorDanger)
                         }
                     }
                     "2" -> {
                         with(binding.statusMeeting) {
-                            text = "Proses"
+                            text = getString(R.string.process)
                             background =
                                 ContextCompat.getDrawable(this@DetailActivity, R.color.colorIndigo)
                         }
                     }
-                    "3" -> binding.statusMeeting.text = "Disetujui\nPimpinan"
+                    "3" -> binding.statusMeeting.text = getString(R.string.approved)
                 }
 
                 when (it.openForum) {
