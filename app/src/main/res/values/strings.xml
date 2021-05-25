@@ -39,7 +39,7 @@
     <string name="description_event">Kamu juga bisa melihat siapa saja yang hadir di eventmu. Cukup daftar ke event yang kamu ikuti, dan scan QR Code ketika kamu datang di lokasi. Jadwal eventmu akan kami kelola dengan baik</string>
     <string name="text_description_event">Deskripsi</string>
     <string name="text_dateTime_event">Waktu Acara</string>
-    <string name="dateTime_event">09:00:00</string>
+    <string name="dateTime_event">00:00:00</string>
     <string name="participant_registration">Peserta Daftar</string>
     <string name="participant_come">Peserta Hadir</string>
     <string name="scan_qr">Scan QR</string>
