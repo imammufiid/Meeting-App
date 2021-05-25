@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.meeting_app.api.ApiConfig
 import com.example.meeting_app.data.entity.ForumEntity
+import com.example.meeting_app.data.entity.ReplyEntity
 import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -15,7 +16,7 @@ class EventViewModel: ViewModel() {
     private var api = ApiConfig.instance()
 
     fun getDetailForum(idRapat: Int?, idForum: Int?) {
-        state.value = EventState.IsLoading(true)
+        state.value = ReplyState.IsLoading(true)
         CompositeDisposable().add(
             api.getDetailForum(idRapat, idForum)
                 .subscribeOn(Schedulers.io())
@@ -23,12 +24,31 @@ class EventViewModel: ViewModel() {
                 .subscribe({
                     when(it.status) {
                         200 -> forumDetail.postValue(it.data)
-                        else -> state.value = EventState.Error(it.message)
+                        else -> state.value = ReplyState.Error(it.message)
                     }
-                    state.value = EventState.IsLoading()
+                    state.value = ReplyState.IsLoading()
                 }, {
-                    state.value = EventState.Error(it.message)
-                    state.value = EventState.IsLoading()
+                    state.value = ReplyState.Error(it.message)
+                    state.value = ReplyState.IsLoading()
+                })
+        )
+    }
+
+    fun replyForum( idForum: String?, idRapat: String?,  idUser: String?, isi: String?) {
+        state.value = ReplyState.IsLoading(true)
+        CompositeDisposable().add(
+            api.replyForum(idForum,idRapat, idUser, isi)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when(it.status) {
+                        201 -> state.value = ReplyState.ReplyForum(it.message, it.data)
+                        else -> state.value = ReplyState.Error(it.message)
+                    }
+                    state.value = ReplyState.IsLoading()
+                }, {
+                    state.value = ReplyState.Error(it.message)
+                    state.value = ReplyState.IsLoading()
                 })
         )
     }
