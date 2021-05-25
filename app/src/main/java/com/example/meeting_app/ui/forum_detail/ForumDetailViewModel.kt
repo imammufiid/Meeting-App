@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class EventViewModel: ViewModel() {
     private var forumDetail = MutableLiveData<ForumEntity>()
-    private var state: SingleLiveEvent<EventState> = SingleLiveEvent()
+    private var state: SingleLiveEvent<ReplyState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
 
     fun getDetailForum(idRapat: Int?, idForum: Int?) {
@@ -37,7 +37,8 @@ class EventViewModel: ViewModel() {
     fun getState() = state
 }
 
-sealed class EventState() {
-    data class IsLoading(var state: Boolean = false): EventState()
-    data class Error(var err: String?): EventState()
+sealed class ReplyState() {
+    data class ReplyForum(var message: String?, var data: ReplyEntity?): ReplyState()
+    data class IsLoading(var state: Boolean = false): ReplyState()
+    data class Error(var err: String?): ReplyState()
 }
