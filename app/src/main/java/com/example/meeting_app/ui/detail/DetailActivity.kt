@@ -158,6 +158,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 when (it.openForum) {
                     "0" -> {
                         binding.btnAddForum.visibility = View.GONE
+                        binding.btnFilter.visibility = View.GONE
                         binding.messageForum.visibility = View.VISIBLE
                     }
                     "1" -> {
@@ -165,8 +166,10 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
                         if (it.statusRapat != "2") {
                             binding.btnAddForum.visibility = View.GONE
+                            binding.btnFilter.visibility = View.GONE
                         } else {
                             binding.btnAddForum.visibility = View.VISIBLE
+                            binding.btnFilter.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -273,11 +276,11 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                             )
                             R.id.comment_a_most -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                reply = ASC
+                                reply = DESC
                             )
                             R.id.comment_a_little -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                reply = DESC
+                                reply = ASC
                             )
                         }
                         return@setOnMenuItemClickListener false
