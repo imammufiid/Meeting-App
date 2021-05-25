@@ -22,7 +22,7 @@ data class ForumEntity(
 	@field:SerializedName("id_user")
 	val idUser: String? = null,
 
-	@field:SerializedName("user")
+	@field:SerializedName("user", alternate = ["user_forum"])
 	val user: UserEntity? = null,
 
 	@field:SerializedName("isi")
@@ -34,8 +34,11 @@ data class ForumEntity(
 	@field:SerializedName("likes")
 	val likes: List<String?>? = null,
 
+	@field:SerializedName("user_like")
+	val userLike: UserEntity? = null,
+
 	@field:SerializedName("total_reply")
-	val totalReply: Int? = null,
+    var totalReply: Int? = null,
 
 	@field:SerializedName("reply")
 	val replies: List<ReplyEntity>? = null
