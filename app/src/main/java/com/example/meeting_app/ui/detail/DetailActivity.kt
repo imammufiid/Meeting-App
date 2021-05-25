@@ -61,7 +61,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             this,
             ViewModelProvider.NewInstanceFactory()
         )[DetailViewModel::class.java]
-        viewModel.getState().observer(this, Observer {
+        viewModel.getState().observer(this, {
             handlerUIState(it)
         })
     }
