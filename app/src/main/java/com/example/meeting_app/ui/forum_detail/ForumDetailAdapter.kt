@@ -44,4 +44,9 @@ class ForumDetailAdapter: RecyclerView.Adapter<ForumDetailAdapter.ViewHolder>() 
         data.addAll(event)
         notifyDataSetChanged()
     }
+
+    fun addOneItem(item: ReplyEntity) {
+        this.data.add(item)
+        notifyDataSetChanged()
+    }
 }
