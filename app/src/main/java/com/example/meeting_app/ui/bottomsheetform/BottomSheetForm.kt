@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.example.meeting_app.R
 import com.example.meeting_app.databinding.FragmentBottomSheetFormListDialogBinding
 import com.example.meeting_app.ui.detail.DetailActivity
-import com.example.meeting_app.ui.home.HomeActivity
+import com.example.meeting_app.ui.forum_detail.ForumDetailActivity
 
 class BottomSheetForm : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -28,8 +28,22 @@ class BottomSheetForm : BottomSheetDialogFragment(), View.OnClickListener {
         _bind.btnAdd.setOnClickListener(this)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if (arguments != null) {
+            val isReply = arguments?.getBoolean(IS_REPLY)
+
+            if (isReply == true) {
+                _bind.title.text = getString(R.string.reply)
+                _bind.btnAdd.text = getString(R.string.reply)
+            }
+        }
+    }
+
     companion object {
         const val TAG = "bottom_sheet_form"
+        const val IS_REPLY = "is_reply"
     }
 
     override fun onClick(v: View?) {
@@ -47,6 +61,8 @@ class BottomSheetForm : BottomSheetDialogFragment(), View.OnClickListener {
 
         if (activity is DetailActivity) {
             this.buttonListener = (activity as DetailActivity).buttonListener
+        } else if (activity is ForumDetailActivity) {
+            this.buttonListener = (activity as ForumDetailActivity).buttonListener
         }
     }
 
