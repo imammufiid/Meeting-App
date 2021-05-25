@@ -83,4 +83,10 @@
     <string name="message_access_forum">Tidak ada akses forum</string>
     <string name="title_room_meeting">Ruang :</string>
     <string name="room">Ruang Meeting</string>
+    <string name="floating_action_button">floating_action_button</string>
+    <string name="title_detail_forum">Detail Forum</string>
+    <string name="replies_empty">Tidak ada Balasan</string>
+    <string name="add_forum">Tambah Forum</string>
+    <string name="input_teks">Masukkan Pertanyaan...</string>
+    <string name="title_meeting_detail">Detail Rapat</string>
 </resources>
