@@ -19,9 +19,17 @@ class ForumDetailAdapter: RecyclerView.Adapter<ForumDetailAdapter.ViewHolder>() 
     val data = ArrayList<ReplyEntity>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bind(reply: ReplyEntity) {
             itemView.username.text = reply.user?.nama
             itemView.comment.text = reply.isi
+
+            val dateTime = reply.waktu?.split(" ")
+            val date = dateTime?.get(0)?.split("-")
+            val time = dateTime?.get(1)?.split(":") as ArrayList
+            time.removeAt(time.lastIndex)
+            itemView.date_time.text =
+                "${date?.reversed()?.joinToString("-")}/${time.joinToString(":")}"
         }
     }
 
