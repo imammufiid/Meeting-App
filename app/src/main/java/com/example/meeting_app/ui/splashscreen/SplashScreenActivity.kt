@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.meeting_app.R
 import com.example.meeting_app.ui.login.LoginActivity
-import com.example.meeting_app.ui.onBoarding.OnBoardingActivity
-import com.example.meeting_app.utils.pref.OnBoardingPref
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
