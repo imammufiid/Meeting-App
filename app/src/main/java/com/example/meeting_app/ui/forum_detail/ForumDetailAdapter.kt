@@ -1,18 +1,15 @@
 package com.example.meeting_app.ui.forum_detail
 
-import android.os.Build
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ReplyEntity
-import kotlinx.android.synthetic.main.item_meeting.view.*
 import kotlinx.android.synthetic.main.item_reply.view.*
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
+import kotlinx.android.synthetic.main.item_reply.view.comment
+import kotlinx.android.synthetic.main.item_reply.view.date_time
 import kotlin.collections.ArrayList
 
 class ForumDetailAdapter: RecyclerView.Adapter<ForumDetailAdapter.ViewHolder>() {
