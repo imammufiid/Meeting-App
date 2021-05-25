@@ -18,14 +18,31 @@
         android:layout_margin="12dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="@string/username" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="@string/username" />
+
+            <TextView
+                android:id="@+id/date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorSecondary"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center_vertical"
+                tools:text="@string/dateTime_event" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/comment"
