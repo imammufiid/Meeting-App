@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold"
-                tools:text="123 likes" />
+                tools:text="123 likes"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/total_reply"
@@ -54,7 +55,8 @@
                 android:textColor="@color/colorPrimaryText"
                 android:textStyle="bold"
                 android:layout_marginStart="12dp"
-                tools:text="7 comment" />
+                tools:text="7 comment"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/date_time"
