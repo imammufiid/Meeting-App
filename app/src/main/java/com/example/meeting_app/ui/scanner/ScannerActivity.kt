@@ -13,12 +13,11 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.google.zxing.BarcodeFormat
-import com.example.meeting_app.data.entity.EventEntity
+import com.example.meeting_app.data.entity.MeetingEntity
 import com.example.meeting_app.databinding.ActivityScannerBinding
 import com.example.meeting_app.ui.detail.DetailActivity
 import com.example.meeting_app.ui.home.HomeActivity
 import com.example.meeting_app.utils.helper.CustomView
-import com.example.meeting_app.utils.pref.UserPref
 
 class ScannerActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityScannerBinding
@@ -68,25 +67,13 @@ class ScannerActivity : AppCompatActivity() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
-
                 when(activity) {
                     HomeActivity.ACTIVITY_NAME -> {
                         viewModel.scan(
-                            UserPref.getUserData(this)?.token,
-                            UserPref.getUserData(this)?.id,
-                            it.text
-                        )
-                    }
-                    DetailActivity.ACTIVITY_NAME -> {
-                        viewModel.registration(
-                            UserPref.getUserData(this)?.token,
-                            UserPref.getUserData(this)?.id,
                             it.text
                         )
                     }
                 }
-
-
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -109,22 +96,14 @@ class ScannerActivity : AppCompatActivity() {
         }
     }
 
-    private fun isSuccess(status: Int?, msg: String?, data: EventEntity?) {
+    private fun isSuccess(status: Int?, msg: String?, data: MeetingEntity?) {
          when(status) {
-             404 -> {
-                 // go to registration
-                 showToast(msg, false)
+             201 -> {
+                 showToast(msg, true)
                  Handler(mainLooper).postDelayed({
                      startActivity(Intent(this, DetailActivity::class.java).apply {
                          putExtra(DetailActivity.EXTRAS_DATA, data)
                      })
-                     finish()
-                 }, 1000)
-             }
-             200 -> {
-                 // goes to come
-                 showToast(msg, true)
-                 Handler(mainLooper).postDelayed({
                      finish()
                  }, 2000)
              }

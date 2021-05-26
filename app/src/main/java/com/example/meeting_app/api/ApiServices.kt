@@ -90,7 +90,7 @@ interface ApiServices {
 
     // ATTENDANCE
     @FormUrlEncoded
-    @POST("peserta/absen")
+    @PUT("peserta/absen")
     fun attendance(
         @Field("code") code: String?,
     ): Observable<WrappedResponse<MeetingEntity>>
