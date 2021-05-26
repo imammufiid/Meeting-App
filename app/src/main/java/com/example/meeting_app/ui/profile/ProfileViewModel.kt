@@ -41,7 +41,7 @@ class ProfileViewModel: ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        201 -> user.postValue(it.data)
+                        201 -> state.value = ProfileState.IsSuccess(it.message, it.data)
                         else -> state.value = ProfileState.Error(it.message)
                     }
                     state.value = ProfileState.IsLoading()
