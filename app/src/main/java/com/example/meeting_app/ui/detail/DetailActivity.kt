@@ -260,19 +260,19 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         when (it.itemId) {
                             R.id.latest -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                time = ASC
+                                time = DESC
                             )
                             R.id.oldest -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                time = DESC
+                                time = ASC
                             )
                             R.id.like_a_most -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                like = ASC
+                                like = DESC
                             )
                             R.id.like_a_little -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
-                                like = DESC
+                                like = ASC
                             )
                             R.id.comment_a_most -> viewModel.getForumByRapatId(
                                 dataMeeting?.idRapat,
