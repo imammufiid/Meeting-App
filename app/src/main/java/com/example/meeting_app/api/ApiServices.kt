@@ -85,7 +85,7 @@ interface ApiServices {
     fun editProfile(
         @Path("id_user") idUser: String?,
         @Field("nama") name: String?,
-        @Path("password") password: String?,
+        @Field("password") password: String?,
     ): Observable<WrappedResponse<UserEntity>>
 
     // ATTENDANCE
