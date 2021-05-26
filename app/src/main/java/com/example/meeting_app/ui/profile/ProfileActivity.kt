@@ -102,6 +102,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener {
             if (isSuccess) {
                 CustomView.customToast(this, message, true, isSuccess = true)
                 _binding.etUsername.setText(data?.nama)
+                _binding.etPassword.setText("")
             } else {
                 CustomView.customToast(this, message, true, isSuccess = false)
             }
