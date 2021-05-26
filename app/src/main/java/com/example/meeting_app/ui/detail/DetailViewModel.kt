@@ -16,8 +16,6 @@ class DetailViewModel() : ViewModel() {
     private var state: SingleLiveEvent<DetailState> = SingleLiveEvent()
     private var api = ApiConfig.instance()
 
-
-
     fun getRapatById(idUser: String?, eventId: String?) {
         state.value = DetailState.IsLoading(true)
         CompositeDisposable().add(
