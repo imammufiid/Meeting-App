@@ -53,7 +53,7 @@
     <string name="due_time">Waktu Selesai</string>
     <string name="simple_message">Message</string>
     <string name="search_event">Cari Eventmu dan Ikuti</string>
-    <string name="data_not_found">Rapat Kosong</string>
+    <string name="data_not_found">Data Rapat tidak ada</string>
     <string name="not_have_participant">Belum ada peserta</string>
     <string name="text_capasity_event">Kapasitas</string>
     <string name="event_detail_title">Detail Rapat</string>
