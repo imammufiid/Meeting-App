@@ -81,7 +81,7 @@ interface ApiServices {
 
     // EDIT PROFILE
     @FormUrlEncoded
-    @PUT("peserta/user/{id_user}")
+    @POST("peserta/user/{id_user}")
     fun editProfile(
         @Path("id_user") idUser: String?,
         @Field("nama") name: String?,
@@ -90,7 +90,7 @@ interface ApiServices {
 
     // ATTENDANCE
     @FormUrlEncoded
-    @PUT("peserta/absen")
+    @POST("peserta/absen")
     fun attendance(
         @Field("code") code: String?,
     ): Observable<WrappedResponse<MeetingEntity>>
