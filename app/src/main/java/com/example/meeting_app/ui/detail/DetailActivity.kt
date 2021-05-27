@@ -140,13 +140,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
                 when (it.statusRapat) {
                     "0" -> binding.statusMeeting.text = getString(R.string.done)
-                    "1" -> {
-                        with(binding.statusMeeting) {
-                            text = getString(R.string.not_yet_start)
-                            background =
-                                ContextCompat.getDrawable(this@DetailActivity, R.color.colorDanger)
-                        }
-                    }
                     "2" -> {
                         with(binding.statusMeeting) {
                             text = getString(R.string.process)
@@ -154,7 +147,13 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                                 ContextCompat.getDrawable(this@DetailActivity, R.color.colorIndigo)
                         }
                     }
-                    "3" -> binding.statusMeeting.text = getString(R.string.approved)
+                    else -> {
+                        with(binding.statusMeeting) {
+                            text = getString(R.string.not_yet_start)
+                            background =
+                                ContextCompat.getDrawable(this@DetailActivity, R.color.colorDanger)
+                        }
+                    }
                 }
 
                 when (it.openForum) {
