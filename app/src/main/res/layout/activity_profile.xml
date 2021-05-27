@@ -36,9 +36,11 @@
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_edit_text"
             android:hint="@string/username"
+            android:inputType="text"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/tv_email"
@@ -58,10 +60,11 @@
             android:background="@drawable/bg_edit_text"
             android:enabled="false"
             android:hint="@string/email"
+            android:inputType="textEmailAddress"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textColor="@drawable/edit_text_disable_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/tv_nip"
@@ -79,12 +82,83 @@
             android:layout_height="42dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_edit_text"
-            android:enabled="false"
             android:hint="@string/nip"
+            android:inputType="number"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textColor="@drawable/edit_text_disable_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:autofillHints="" />
+
+        <!-- Layout Jabatan & Pangkat -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="true">
+
+            <!-- Layout Jabatan -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_jabatan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/jabatan"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_jabatan"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/jabatan"
+                    android:inputType="text"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="" />
+            </LinearLayout>
+
+            <!-- Layout Pangkat -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_pangkat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pangkat"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_pangkat"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/pangkat"
+                    android:inputType="text"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_instance"
@@ -102,12 +176,12 @@
             android:layout_height="42dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_edit_text"
-            android:enabled="false"
             android:hint="@string/instance"
+            android:inputType="text"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textColor="@drawable/edit_text_disable_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/tv_address_instance"
@@ -125,15 +199,85 @@
             android:layout_height="120dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_edit_text"
-            android:enabled="false"
             android:gravity="top"
             android:hint="@string/address_instance"
             android:inputType="textMultiLine"
             android:maxLines="5"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textColor="@drawable/edit_text_disable_color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:autofillHints="" />
+
+        <!-- Layout Jabatan & Pangkat -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <!-- Layout Jabatan -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_telp_instance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/telp_instansi"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_telp_instansi"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/telp_instansi_et"
+                    android:inputType="text"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="" />
+            </LinearLayout>
+
+            <!-- Layout Pangkat -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_fax_instansi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fax_instansi"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/et_fax_instansi"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/fax_instansi_et"
+                    android:inputType="text"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:textSize="14sp"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_password"
@@ -155,8 +299,8 @@
             android:inputType="textPassword"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:textSize="14sp" />
-
+            android:textSize="14sp"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/btn_edit_profile"

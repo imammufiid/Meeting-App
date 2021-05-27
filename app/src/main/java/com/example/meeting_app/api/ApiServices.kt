@@ -5,6 +5,8 @@ import com.example.meeting_app.data.response.MessageResponse
 import com.example.meeting_app.data.response.WrappedListResponses
 import com.example.meeting_app.data.response.WrappedResponse
 import io.reactivex.rxjava3.core.Observable
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiServices {
@@ -80,12 +82,20 @@ interface ApiServices {
     ): Observable<WrappedResponse<UserEntity>>
 
     // EDIT PROFILE
-    @FormUrlEncoded
+    @Multipart
     @POST("peserta/user/{id_user}")
     fun editProfile(
         @Path("id_user") idUser: String?,
-        @Field("nama") name: String?,
-        @Field("password") password: String?,
+        @Part("nama") name: RequestBody?,
+        @Part("nip") nip: RequestBody?,
+        @Part("jabatan") jabatan: RequestBody?,
+        @Part("pangkat") pangkat: RequestBody?,
+        @Part("instansi") instansi: RequestBody?,
+        @Part("alamat_instansi") addressInstansi: RequestBody?,
+        @Part("telepon_instansi") telp: RequestBody?,
+        @Part("fax_instansi") fax: RequestBody?,
+        @Part("password") password: RequestBody?,
+        @Part image: MultipartBody.Part? = null,
     ): Observable<WrappedResponse<UserEntity>>
 
     // ATTENDANCE
