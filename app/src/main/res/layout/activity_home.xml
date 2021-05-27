@@ -36,6 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="@string/data_not_found"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
