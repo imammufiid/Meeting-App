@@ -113,6 +113,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             if (it.isNullOrEmpty()) {
                 binding.tvMessage.visibility = View.VISIBLE
                 binding.tvMessage.text = getString(R.string.data_not_found)
+                adapter.setData(it)
             } else {
                 binding.tvMessage.visibility = View.GONE
                 adapter.setData(it)
