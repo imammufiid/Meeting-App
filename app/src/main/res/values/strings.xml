@@ -109,4 +109,10 @@
     <string name="edit_profile">Edit Profil</string>
     <string name="title_profile">Profil</string>
     <string name="address_instance">Alamat Instansi</string>
+    <string name="jabatan">Jabatan</string>
+    <string name="pangkat">Pangkat</string>
+    <string name="telp_instansi">Telp. Instansi</string>
+    <string name="telp_instansi_et">Telp. (0342) 80xxxx</string>
+    <string name="fax_instansi">Fax Instansi</string>
+    <string name="fax_instansi_et">Fax. (0342) 68xxxx</string>
 </resources>
