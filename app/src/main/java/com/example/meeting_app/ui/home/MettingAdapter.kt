@@ -47,15 +47,14 @@ class MettingAdapter(val context: Context, private val onClick: (MeetingEntity) 
                     itemView.status_event.text = "Selesai"
                     itemView.status_event.background = context.resources.getDrawable(R.color.colorPrimary, null)
                 }
-                "1" -> {
-                    itemView.status_event.text = "Belum Dimulai"
-                    itemView.status_event.background = context.resources.getDrawable(R.color.colorDanger, null)
-                }
                 "2" -> {
                     itemView.status_event.text = "Proses"
                     itemView.status_event.background = context.resources.getDrawable(R.color.colorIndigo, null)
                 }
-                "3" -> itemView.status_event.text = "Disetujui\nPimpinan"
+                else -> {
+                    itemView.status_event.text = "Belum Dimulai"
+                    itemView.status_event.background = context.resources.getDrawable(R.color.colorDanger, null)
+                }
             }
 
             itemView.setOnClickListener {
