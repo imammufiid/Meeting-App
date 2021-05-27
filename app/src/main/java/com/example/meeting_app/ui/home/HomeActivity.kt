@@ -210,10 +210,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                                 val idUser = UserPref.getUserData(this@HomeActivity).idUser
                                 viewModel.getMeetingData(idUser, PROCESS)
                             }
-                            R.id.approve_leader -> {
-                                val idUser = UserPref.getUserData(this@HomeActivity).idUser
-                                viewModel.getMeetingData(idUser, APPROVED)
-                            }
                         }
                         return@setOnMenuItemClickListener false
                     }
