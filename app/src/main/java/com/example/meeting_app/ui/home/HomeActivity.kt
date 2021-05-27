@@ -168,7 +168,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                                     setMessage(getString(R.string.question_logout))
                                         .setPositiveButton(getString(R.string.yes)) { _, _->
                                             UserPref.setIsLoggedIn(this@HomeActivity, false)
-                                            // viewModel.logout(UserPref.getUserData(this@HomeActivity)?.token)
                                             UserPref.clear(this@HomeActivity)
                                             Handler(mainLooper).postDelayed({
                                                 startActivity(Intent(this@HomeActivity, LoginActivity::class.java).apply {
