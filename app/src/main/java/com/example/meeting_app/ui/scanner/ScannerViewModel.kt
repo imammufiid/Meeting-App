@@ -3,10 +3,12 @@ package com.example.meeting_app.ui.scanner
 import androidx.lifecycle.ViewModel
 import com.example.meeting_app.api.ApiConfig
 import com.example.meeting_app.data.entity.MeetingEntity
+import com.example.meeting_app.ui.profile.ProfileState
 import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
 
 class ScannerViewModel : ViewModel() {
     private var state: SingleLiveEvent<ScannerState> = SingleLiveEvent()
@@ -25,7 +27,14 @@ class ScannerViewModel : ViewModel() {
                     }
                     state.value = ScannerState.IsLoading()
                 }, {
-                    state.value = ScannerState.Error(it.message)
+                    val httpException = it as HttpException
+                    when(httpException.code()) {
+                        400 -> {
+                            val message = "QRCode tidak cocok"
+                            state.value = ScannerState.Error(message)
+                        }
+                        else -> state.value = ScannerState.Error(it.message())
+                    }
                     state.value = ScannerState.IsLoading()
                 })
         )
