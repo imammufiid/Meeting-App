@@ -9,6 +9,7 @@ import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
 
 class EventViewModel: ViewModel() {
     private var forumDetail = MutableLiveData<ForumEntity>()
@@ -28,7 +29,14 @@ class EventViewModel: ViewModel() {
                     }
                     state.value = ReplyState.IsLoading()
                 }, {
-                    state.value = ReplyState.Error(it.message)
+                    val httpException = it as HttpException
+                    when(httpException.code()) {
+                        404 -> {
+                            val message = "Data tidak ditemukan"
+                            state.value = ReplyState.Error(message)
+                        }
+                        else -> state.value = ReplyState.Error(it.message())
+                    }
                     state.value = ReplyState.IsLoading()
                 })
         )

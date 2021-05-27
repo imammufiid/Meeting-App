@@ -4,10 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.meeting_app.api.ApiConfig
 import com.example.meeting_app.data.entity.UserEntity
+import com.example.meeting_app.ui.detail.DetailState
 import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
 
 class ProfileViewModel: ViewModel() {
     private var user = MutableLiveData<UserEntity>()
@@ -27,7 +29,14 @@ class ProfileViewModel: ViewModel() {
                     }
                     state.value = ProfileState.IsLoading()
                 }, {
-                    state.value = ProfileState.Error(it.message)
+                    val httpException = it as HttpException
+                    when(httpException.code()) {
+                        404 -> {
+                            val message = "Data tidak ditemukan"
+                            state.value = ProfileState.Error(message)
+                        }
+                        else -> state.value = ProfileState.Error(it.message())
+                    }
                     state.value = ProfileState.IsLoading()
                 })
         )

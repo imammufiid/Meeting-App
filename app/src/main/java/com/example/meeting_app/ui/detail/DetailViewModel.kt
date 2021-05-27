@@ -9,6 +9,7 @@ import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import retrofit2.HttpException
 
 class DetailViewModel() : ViewModel() {
     private var meeting = MutableLiveData<MeetingEntity>()
@@ -29,7 +30,14 @@ class DetailViewModel() : ViewModel() {
                     }
                     state.value = DetailState.IsLoading()
                 }, {
-                    state.value = DetailState.Error(it.message)
+                    val httpException = it as HttpException
+                    when(httpException.code()) {
+                        404 -> {
+                            val message = "Data tidak ditemukan"
+                            state.value = DetailState.Error(message)
+                        }
+                        else -> state.value = DetailState.Error(it.message())
+                    }
                     state.value = DetailState.IsLoading()
                 })
         )
@@ -53,7 +61,14 @@ class DetailViewModel() : ViewModel() {
                     }
                     state.value = DetailState.IsLoadingProgressBar()
                 }, {
-                    state.value = DetailState.Error(it.message)
+                    val httpException = it as HttpException
+                    when(httpException.code()) {
+                        404 -> {
+                            val message = "Data Forum tidak ditemukan"
+                            state.value = DetailState.Error(message)
+                        }
+                        else -> state.value = DetailState.Error(it.message())
+                    }
                     state.value = DetailState.IsLoadingProgressBar()
                 })
         )
