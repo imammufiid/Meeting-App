@@ -43,7 +43,10 @@ class MettingAdapter(val context: Context, private val onClick: (MeetingEntity) 
                 "$startTime - $dueTime"
 
             when (meeting.statusRapat) {
-                "0" -> itemView.status_event.text = "Selesai"
+                "0" -> {
+                    itemView.status_event.text = "Selesai"
+                    itemView.status_event.background = context.resources.getDrawable(R.color.colorPrimary, null)
+                }
                 "1" -> {
                     itemView.status_event.text = "Belum Dimulai"
                     itemView.status_event.background = context.resources.getDrawable(R.color.colorDanger, null)
