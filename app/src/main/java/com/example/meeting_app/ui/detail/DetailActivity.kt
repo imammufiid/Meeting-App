@@ -132,7 +132,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.keteranganMeeting.text = it.keterangan
                 binding.fromMeeting.text = it.dari
                 binding.roomMeeting.text = it.ruang
-                binding.dateMeeting.text = it.tglRapat
+
+                val date = it.tglRapat?.split("-")?.reversed() as ArrayList
+                binding.dateMeeting.text = date.joinToString("-")
                 binding.dateTimeMeeting.text = it.jamMulai
                 binding.dueDateTimeMeeting.text = it.jamSelesai
 
