@@ -57,7 +57,7 @@ class ProfileViewModel : ViewModel() {
         telp: RequestBody?,
         fax: RequestBody?,
         password: RequestBody?,
-        image: MultipartBody.Part?
+        image: MultipartBody.Part? = null
     ) {
         state.value = ProfileState.IsLoading(true)
         CompositeDisposable().add(
