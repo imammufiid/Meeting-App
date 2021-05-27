@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
+import com.example.meeting_app.utils.pref.UserPref
 import kotlinx.android.synthetic.main.item_forum.view.*
 import okhttp3.internal.format
 import kotlin.collections.ArrayList
@@ -47,14 +48,15 @@ class ForumAdapter(val context: Context, val callback: ActionCallback) :
                 "${date?.reversed()?.joinToString("-")}/${time.joinToString(":")}"
 
             // likes
-            itemView.btn_like.background =
-                context.resources.getDrawable(R.drawable.ic_favorite_border, null)
-            itemView.btn_like.isEnabled = true
             if (forum.likes != null) {
-                if (forum.likes.contains(forum.idUser)) {
+                if (forum.likes.contains(UserPref.getUserData(context)?.idUser)) {
                     itemView.btn_like.background =
                         context.resources.getDrawable(R.drawable.ic_favorite, null)
                     itemView.btn_like.isEnabled = false
+                } else {
+                    itemView.btn_like.background =
+                        context.resources.getDrawable(R.drawable.ic_favorite_border, null)
+                    itemView.btn_like.isEnabled = true
                 }
             }
 
