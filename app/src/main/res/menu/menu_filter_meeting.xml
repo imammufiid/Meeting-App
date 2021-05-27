@@ -13,8 +13,4 @@
         android:id="@+id/process"
         android:title="@string/process"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/approve_leader"
-        android:title="@string/approved_leader"
-        app:showAsAction="never"/>
 </menu>
