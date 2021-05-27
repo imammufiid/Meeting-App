@@ -74,9 +74,11 @@ class MettingAdapter(val context: Context, private val onClick: (MeetingEntity) 
 
     override fun getItemCount(): Int = data.size
 
-    fun setData(data: List<MeetingEntity>) {
+    fun setData(data: List<MeetingEntity>?) {
         this.data.clear()
-        this.data.addAll(data)
+        if (data != null) {
+            this.data.addAll(data)
+        }
         notifyDataSetChanged()
     }
 
