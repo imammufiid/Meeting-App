@@ -98,12 +98,18 @@ class ScannerActivity : AppCompatActivity() {
 
     private fun isSuccess(status: Int?, msg: String?, data: MeetingEntity?) {
          when(status) {
-             201 -> {
+             200 -> {
                  showToast(msg, true)
                  Handler(mainLooper).postDelayed({
                      startActivity(Intent(this, DetailActivity::class.java).apply {
                          putExtra(DetailActivity.EXTRAS_DATA, data)
                      })
+                     finish()
+                 }, 2000)
+             }
+             else -> {
+                 showToast(msg, false)
+                 Handler(mainLooper).postDelayed({
                      finish()
                  }, 2000)
              }

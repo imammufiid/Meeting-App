@@ -22,8 +22,8 @@ class ScannerViewModel : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     when(it.status) {
-                        201 -> state.value = ScannerState.IsSuccess(it.status, it.message, it.data)
-                        else -> state.value = ScannerState.Error(it.message)
+                        200 -> state.value = ScannerState.IsSuccess(it.status, it.message, it.data)
+                        else -> state.value = ScannerState.IsSuccess(it.status, it.message, null)
                     }
                     state.value = ScannerState.IsLoading()
                 }, {
