@@ -44,7 +44,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnLogin.setOnClickListener(this)
         loading = ProgressDialog(this)
         
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[LoginViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.NewInstanceFactory()
+        )[LoginViewModel::class.java]
         viewModel.getState().observer(this, {
             handleUIState(it)
         })

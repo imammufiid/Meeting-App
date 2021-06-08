@@ -30,10 +30,7 @@ class LoginViewModel : ViewModel() {
         )
     }
 
-    fun loginValidate(
-        email: String?,
-        password: String?,
-    ): Boolean {
+    fun loginValidate(email: String?, password: String?, ): Boolean {
         state.value = AuthState.Reset
         if (email != null) {
             if (email.isEmpty()) {
@@ -41,14 +38,12 @@ class LoginViewModel : ViewModel() {
                 return false
             }
         }
-
         if (password != null) {
             if (password.isEmpty()) {
                 state.value = AuthState.Error("Password Tidak Boleh Kosong")
                 return false
             }
         }
-
         return true
     }
 
