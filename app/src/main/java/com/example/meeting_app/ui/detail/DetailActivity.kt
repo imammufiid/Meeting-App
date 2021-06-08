@@ -98,20 +98,20 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun likeForum(message: String?, data: ForumEntity?) {
+    private fun likeForum(message: String?, oldData: ForumEntity?) {
         CustomView.customToast(this, message, true, isSuccess = true)
 
-        if (data != null) {
+        if (oldData != null) {
             val newData = ForumEntity(
-                id = data.id,
-                isi = data.isi,
-                idUser = data.idUser,
-                idRapat = data.idRapat,
-                user = UserEntity(nama = data.user?.nama),
-                likesCount = data.likesCount?.plus(1),
-                totalReply = data.totalReply,
-                likes = listOf(data.idUser),
-                waktu = data.waktu
+                id = oldData.id,
+                isi = oldData.isi,
+                idUser = oldData.idUser,
+                idRapat = oldData.idRapat,
+                user = UserEntity(nama = oldData.user?.nama),
+                likesCount = oldData.likesCount,
+                totalReply = oldData.totalReply,
+                likes = oldData.likes,
+                waktu = oldData.waktu
             )
             itemPositionLike?.let { position -> adapter.changeItem(newData, position) }
         }

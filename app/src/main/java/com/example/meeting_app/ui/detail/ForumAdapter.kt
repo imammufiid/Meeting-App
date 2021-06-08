@@ -2,7 +2,6 @@ package com.example.meeting_app.ui.detail
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
 import com.example.meeting_app.utils.pref.UserPref
 import kotlinx.android.synthetic.main.item_forum.view.*
-import okhttp3.internal.format
 import kotlin.collections.ArrayList
 
 class ForumAdapter(val context: Context, val callback: ActionCallback) :
@@ -49,22 +47,17 @@ class ForumAdapter(val context: Context, val callback: ActionCallback) :
 
             // likes
             if (forum.likes != null) {
-                if (forum.likes.contains(UserPref.getUserData(context)?.idUser)) {
+                if (forum.likes.contains(UserPref.getUserData(context).idUser)) {
                     itemView.btn_like.background =
                         context.resources.getDrawable(R.drawable.ic_favorite, null)
-                    itemView.btn_like.isEnabled = false
                 } else {
                     itemView.btn_like.background =
                         context.resources.getDrawable(R.drawable.ic_favorite_border, null)
-                    itemView.btn_like.isEnabled = true
                 }
             }
 
             // listener
             itemView.btn_like.setOnClickListener {
-                itemView.btn_like.background =
-                    context.resources.getDrawable(R.drawable.ic_favorite, null)
-                itemView.btn_like.isEnabled = false
                 callback.like(forum, adapterPosition)
             }
             itemView.btn_comment.setOnClickListener {
