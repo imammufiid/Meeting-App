@@ -8,8 +8,11 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class AbsenEntity(
 
-    @field:SerializedName("qr")
-    val qr: String? = null,
+    @field:SerializedName("qr_web")
+    val qrWeb: String? = null,
+
+    @field:SerializedName("qr_mobile")
+    val qrMobile: String? = null,
 
     @field:SerializedName("id_peserta")
     val idPeserta: String? = null,

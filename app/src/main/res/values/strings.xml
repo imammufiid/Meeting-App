@@ -115,4 +115,6 @@
     <string name="telp_instansi_et">Telp. (0342) 80xxxx</string>
     <string name="fax_instansi">Fax Instansi</string>
     <string name="fax_instansi_et">Fax. (0342) 68xxxx</string>
+    <string name="text_qr_web">QR Code Web</string>
+    <string name="text_qr_mobile">QR Code Mobile</string>
 </resources>

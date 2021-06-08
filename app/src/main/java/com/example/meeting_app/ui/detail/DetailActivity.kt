@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
 import com.example.meeting_app.data.entity.MeetingEntity
@@ -137,6 +138,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.dateMeeting.text = date.joinToString("-")
                 binding.dateTimeMeeting.text = it.jamMulai
                 binding.dueDateTimeMeeting.text = it.jamSelesai
+
+                // show qr code
+                Glide.with(this)
+                    .load(it.absen?.qrWeb)
+                    .into(binding.qrWeb)
+
+                Glide.with(this)
+                    .load(it.absen?.qrMobile)
+                    .into(binding.qrMobile)
 
                 when (it.statusRapat) {
                     "0" -> binding.statusMeeting.text = getString(R.string.done)
