@@ -2,6 +2,7 @@ package com.example.meeting_app.ui.detail
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.ceylonlabs.imageviewpopup.ImagePopup
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
 import com.example.meeting_app.data.entity.MeetingEntity
@@ -29,6 +31,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private var dataMeeting: MeetingEntity? = null
     private lateinit var adapter: ForumAdapter
     private var itemPositionLike: Int? = 0
+    private var qrWebUrl: String? = ""
+    private var qrMobileUrl: String? = ""
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
@@ -56,6 +60,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnAddForum.setOnClickListener(this)
         binding.btnFilter.setOnClickListener(this)
+        binding.qrWeb.setOnClickListener(this)
+        binding.qrMobile.setOnClickListener(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -143,10 +149,12 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 Glide.with(this)
                     .load(it.absen?.qrWeb)
                     .into(binding.qrWeb)
+                qrWebUrl = it.absen?.qrWeb
 
                 Glide.with(this)
                     .load(it.absen?.qrMobile)
                     .into(binding.qrMobile)
+                qrMobileUrl = it.absen?.qrMobile
 
                 when (it.statusRapat) {
                     "0" -> binding.statusMeeting.text = getString(R.string.done)
@@ -297,6 +305,22 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         return@setOnMenuItemClickListener false
                     }
                 }.show()
+            }
+            R.id.qr_web -> {
+                ImagePopup(this).apply {
+                    backgroundColor = Color.BLACK
+                    isFullScreen = true
+                    isImageOnClickClose = true
+                    initiatePopupWithGlide(qrWebUrl)
+                }.viewPopup()
+            }
+            R.id.qr_mobile -> {
+                ImagePopup(this).apply {
+                    backgroundColor = Color.BLACK
+                    isFullScreen = true
+                    isImageOnClickClose = true
+                    initiatePopupWithGlide(qrMobileUrl)
+                }.viewPopup()
             }
         }
 
