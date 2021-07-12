@@ -60,8 +60,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnAddForum.setOnClickListener(this)
         binding.btnFilter.setOnClickListener(this)
-        binding.qrWeb.setOnClickListener(this)
-        binding.qrMobile.setOnClickListener(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -144,17 +142,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 binding.dateMeeting.text = date.joinToString("-")
                 binding.dateTimeMeeting.text = it.jamMulai
                 binding.dueDateTimeMeeting.text = it.jamSelesai
-
-                // show qr code
-                Glide.with(this)
-                    .load(it.absen?.qrWeb)
-                    .into(binding.qrWeb)
-                qrWebUrl = it.absen?.qrWeb
-
-                Glide.with(this)
-                    .load(it.absen?.qrMobile)
-                    .into(binding.qrMobile)
-                qrMobileUrl = it.absen?.qrMobile
 
                 when (it.statusRapat) {
                     "0" -> binding.statusMeeting.text = getString(R.string.done)
@@ -305,22 +292,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         return@setOnMenuItemClickListener false
                     }
                 }.show()
-            }
-            R.id.qr_web -> {
-                ImagePopup(this).apply {
-                    backgroundColor = Color.BLACK
-                    isFullScreen = true
-                    isImageOnClickClose = true
-                    initiatePopupWithGlide(qrWebUrl)
-                }.viewPopup()
-            }
-            R.id.qr_mobile -> {
-                ImagePopup(this).apply {
-                    backgroundColor = Color.BLACK
-                    isFullScreen = true
-                    isImageOnClickClose = true
-                    initiatePopupWithGlide(qrMobileUrl)
-                }.viewPopup()
             }
         }
 
