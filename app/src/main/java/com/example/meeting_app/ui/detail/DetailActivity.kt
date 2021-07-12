@@ -193,6 +193,23 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_signature, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
+        R.id.menu_signature -> {
+            SignatureBottomSheet().show(
+                supportFragmentManager, SignatureBottomSheet.TAG
+            )
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun setRecyclerView() {
         adapter = ForumAdapter(this, object : ForumAdapter.ActionCallback {
             override fun like(forum: ForumEntity, position: Int) {
