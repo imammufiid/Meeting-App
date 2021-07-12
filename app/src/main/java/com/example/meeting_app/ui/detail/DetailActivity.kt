@@ -1,17 +1,21 @@
 package com.example.meeting_app.ui.detail
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Color
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.ceylonlabs.imageviewpopup.ImagePopup
 import com.example.meeting_app.R
 import com.example.meeting_app.data.entity.ForumEntity
 import com.example.meeting_app.data.entity.MeetingEntity
@@ -19,6 +23,7 @@ import com.example.meeting_app.data.entity.UserEntity
 import com.example.meeting_app.databinding.ActivityDetailBinding
 import com.example.meeting_app.ui.bottomsheetform.BottomSheetForm
 import com.example.meeting_app.ui.forum_detail.ForumDetailActivity
+import com.example.meeting_app.ui.signature.SignatureBottomSheet
 import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
 import kotlinx.android.synthetic.main.forum_box.*
@@ -31,8 +36,6 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private var dataMeeting: MeetingEntity? = null
     private lateinit var adapter: ForumAdapter
     private var itemPositionLike: Int? = 0
-    private var qrWebUrl: String? = ""
-    private var qrMobileUrl: String? = ""
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
@@ -53,6 +56,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun init() {
+        checkPermission()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = getString(R.string.title_meeting_detail)
@@ -268,6 +272,36 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
         }
+
+    internal var buttonSignatureListener: SignatureBottomSheet.ButtonSignatureListener =
+        object : SignatureBottomSheet.ButtonSignatureListener {
+            override fun signIn() {
+                Toast.makeText(this@DetailActivity, "View Model Sign In Signature", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (
+                checkSelfPermission(
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    1
+                )
+            }
+        }
+    }
 
     override fun onClick(v: View?) {
         when (v?.id) {
