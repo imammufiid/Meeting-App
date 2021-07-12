@@ -19,23 +19,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name="com.example.meeting_app.ui.profile.ProfileActivity"/>
+        <activity android:name=".ui.signature.SignatureActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity" />
         <activity
-            android:name="com.example.meeting_app.ui.scanner.ScannerActivity"
+            android:name=".ui.scanner.ScannerActivity"
             android:theme="@style/Theme.NoActionBar" />
         <activity
-            android:name="com.example.meeting_app.ui.forum_detail.ForumDetailActivity"
-            android:parentActivityName=".ui.detail.DetailActivity"/>
+            android:name=".ui.forum_detail.ForumDetailActivity"
+            android:parentActivityName=".ui.detail.DetailActivity" />
         <activity
-            android:name="com.example.meeting_app.ui.detail.DetailActivity"
-            android:parentActivityName=".ui.home.HomeActivity"
-            android:launchMode="singleTop"/>
+            android:name=".ui.detail.DetailActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.home.HomeActivity" />
         <activity
-            android:name="com.example.meeting_app.ui.home.HomeActivity"
-            android:theme="@style/Theme.NoActionBar"
-            android:launchMode="singleTop"/>
-        <activity android:name="com.example.meeting_app.ui.login.LoginActivity" />
-        <activity android:name="com.example.meeting_app.ui.splashscreen.SplashScreenActivity">
+            android:name=".ui.home.HomeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
