@@ -117,4 +117,6 @@
     <string name="fax_instansi_et">Fax. (0342) 68xxxx</string>
     <string name="text_qr_web">QR Code Web</string>
     <string name="text_qr_mobile">QR Code Mobile</string>
+    <string name="attendance">Absen</string>
+    <string name="clear">Hapus</string>
 </resources>
