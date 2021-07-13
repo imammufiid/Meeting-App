@@ -119,7 +119,7 @@ class DetailViewModel() : ViewModel() {
         idUser: RequestBody?,
         image: MultipartBody.Part? = null
     ) {
-        state.value = DetailState.IsLoadingProgressBar(true)
+        state.value = DetailState.IsLoading(true)
         CompositeDisposable().add(
             api.attendanceTTD(idRapat, idUser, image)
                 .subscribeOn(Schedulers.io())
@@ -129,9 +129,10 @@ class DetailViewModel() : ViewModel() {
                         201 -> state.value = DetailState.AttendanceSuccess(it.message, it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
+                    state.value = DetailState.IsLoading()
                 }, {
                     state.value = DetailState.Error(it.message)
-                    state.value = DetailState.IsLoadingProgressBar()
+                    state.value = DetailState.IsLoading()
                 })
         )
     }
