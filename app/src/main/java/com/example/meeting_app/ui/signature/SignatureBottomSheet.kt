@@ -50,7 +50,7 @@ class SignatureBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
         _bind.btnSignin.setOnClickListener(this)
         _bind.signaturePad.setOnSignedListener(object : SignaturePad.OnSignedListener {
             override fun onStartSigning() {
-                Toast.makeText(context, "On start Signing", Toast.LENGTH_SHORT).show()
+                // Toast.makeText(context, "On start Signing", Toast.LENGTH_SHORT).show()
             }
 
             override fun onSigned() {
@@ -126,9 +126,9 @@ class SignatureBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
                 if (buttonSignatureListener != null) {
                     val signatureBitmap = _bind.signaturePad.signatureBitmap
                     if (addJpgSignatureToGallery(signatureBitmap)) {
-                        Toast.makeText(context, "Signature saved into the Gallery", Toast.LENGTH_SHORT)
-                            .show()
-                        buttonSignatureListener?.signIn()
+//                        Toast.makeText(context, "Signature saved into the Gallery", Toast.LENGTH_SHORT)
+//                            .show()
+                        imagePathSignature?.let { buttonSignatureListener?.signIn(it) }
                         dialog?.dismiss()
                     } else {
                         Toast.makeText(context, "Unable to store the signature", Toast.LENGTH_SHORT)
