@@ -104,4 +104,12 @@ interface ApiServices {
     fun attendance(
         @Field("code") code: String?,
     ): Observable<WrappedResponse<MeetingEntity>>
+
+    @Multipart
+    @POST("peserta/absenttd")
+    fun attendanceTTD(
+        @Part("id_rapat") idRapat: RequestBody?,
+        @Part("id_user") idUser: RequestBody?,
+        @Part image: MultipartBody.Part? = null,
+    ): Observable<WrappedResponse<MeetingEntity>>
 }
