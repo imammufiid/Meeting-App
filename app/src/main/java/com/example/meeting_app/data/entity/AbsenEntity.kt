@@ -27,5 +27,8 @@ data class AbsenEntity(
     val tandaTangan: String? = null,
 
     @field:SerializedName("absen")
-    val absen: String? = null
+    val absen: String? = null,
+
+    @field:SerializedName("absen2")
+    val absen2: String? = null
 ) : Parcelable
