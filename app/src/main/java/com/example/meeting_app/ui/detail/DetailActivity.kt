@@ -28,6 +28,11 @@ import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
 import kotlinx.android.synthetic.main.forum_box.*
 import kotlinx.android.synthetic.main.item_meeting.view.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailBinding
@@ -36,6 +41,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
     private var dataMeeting: MeetingEntity? = null
     private lateinit var adapter: ForumAdapter
     private var itemPositionLike: Int? = 0
+    private var part: MultipartBody.Part? = null
 
     companion object {
         const val EXTRAS_DATA = "extras_data"
@@ -276,8 +282,15 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
 
     internal var buttonSignatureListener: SignatureBottomSheet.ButtonSignatureListener =
         object : SignatureBottomSheet.ButtonSignatureListener {
-            override fun signIn() {
-                Toast.makeText(this@DetailActivity, "View Model Sign In Signature", Toast.LENGTH_SHORT).show()
+            override fun signIn(pathSignature: String) {
+                val idMeeting =
+                    dataMeeting?.idRapat?.toRequestBody("text/plain".toMediaTypeOrNull())
+                val idUser = UserPref.getUserData(this@DetailActivity)
+                    .idUser?.toRequestBody("text/plain".toMediaTypeOrNull())
+                val pictFromBitmap = File(pathSignature)
+                val reqFile = pictFromBitmap.asRequestBody("image/*".toMediaTypeOrNull())
+                part = MultipartBody.Part.createFormData("image", pictFromBitmap.name, reqFile)
+                viewModel.attendanceTTD(idMeeting, idUser, part)
             }
 
         }

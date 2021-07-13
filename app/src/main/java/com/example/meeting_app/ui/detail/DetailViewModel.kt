@@ -9,6 +9,8 @@ import com.example.meeting_app.utils.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
 
 class DetailViewModel() : ViewModel() {
@@ -112,15 +114,38 @@ class DetailViewModel() : ViewModel() {
         )
     }
 
+    fun attendanceTTD(
+        idRapat: RequestBody?,
+        idUser: RequestBody?,
+        image: MultipartBody.Part? = null
+    ) {
+        state.value = DetailState.IsLoadingProgressBar(true)
+        CompositeDisposable().add(
+            api.attendanceTTD(idRapat, idUser, image)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    when (it.status) {
+                        201 -> state.value = DetailState.AttendanceSuccess(it.message, it.data)
+                        else -> state.value = DetailState.Error(it.message)
+                    }
+                }, {
+                    state.value = DetailState.Error(it.message)
+                    state.value = DetailState.IsLoadingProgressBar()
+                })
+        )
+    }
+
     fun getMeeting() = meeting
     fun getForums() = forums
     fun getState() = state
 }
 
 sealed class DetailState() {
-    data class LikeForum(var message: String?, var data: ForumEntity?): DetailState()
-    data class AddForum(var message: String?, var data: ForumEntity?): DetailState()
-    data class IsLoading(var state: Boolean = false): DetailState()
-    data class IsLoadingProgressBar(var state: Boolean = false): DetailState()
-    data class Error(var err: String?): DetailState()
+    data class LikeForum(var message: String?, var data: ForumEntity?) : DetailState()
+    data class AddForum(var message: String?, var data: ForumEntity?) : DetailState()
+    data class AttendanceSuccess(var message: String?, var data: MeetingEntity?) : DetailState()
+    data class IsLoading(var state: Boolean = false) : DetailState()
+    data class IsLoadingProgressBar(var state: Boolean = false) : DetailState()
+    data class Error(var err: String?) : DetailState()
 }
