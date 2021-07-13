@@ -10,7 +10,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -170,6 +169,20 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                                 ContextCompat.getDrawable(this@DetailActivity, R.color.colorDanger)
                         }
                     }
+                }
+
+                when (it.absen?.absen) {
+                    "1" -> binding.includeAttendance.attendanceCheck1
+                        .setImageResource(R.drawable.ic_check)
+                    "0" -> binding.includeAttendance.attendanceCheck1
+                        .setImageResource(R.drawable.ic_radio_white_unchecked)
+                }
+
+                when (it.absen?.absen2) {
+                    "1" -> binding.includeAttendance.attendanceCheck2
+                        .setImageResource(R.drawable.ic_check)
+                    "0" -> binding.includeAttendance.attendanceCheck2
+                        .setImageResource(R.drawable.ic_radio_white_unchecked)
                 }
 
                 when (it.openForum) {
