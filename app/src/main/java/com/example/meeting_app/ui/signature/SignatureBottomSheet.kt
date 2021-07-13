@@ -153,6 +153,6 @@ class SignatureBottomSheet : BottomSheetDialogFragment(), View.OnClickListener {
     }
 
     interface ButtonSignatureListener {
-        fun signIn()
+        fun signIn(pathSignature: String)
     }
 }
