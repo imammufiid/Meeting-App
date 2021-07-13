@@ -19,7 +19,6 @@ import com.example.meeting_app.databinding.ActivityHomeBinding
 import com.example.meeting_app.ui.detail.DetailActivity
 import com.example.meeting_app.ui.login.LoginActivity
 import com.example.meeting_app.ui.profile.ProfileActivity
-import com.example.meeting_app.ui.signature.SignatureActivity
 import com.example.meeting_app.utils.helper.CustomView
 import com.example.meeting_app.utils.pref.UserPref
 
@@ -80,7 +79,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
             handlerUIState(it)
         })
 
-        binding.ibScan.setOnClickListener(this)
         binding.include.ibSetting.setOnClickListener(this)
         binding.include.ibFilter.setOnClickListener(this)
     }
@@ -186,9 +184,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener {
                         return@setOnMenuItemClickListener false
                     }
                 }.show()
-            }
-            R.id.ib_scan -> {
-                startActivity(Intent(this, SignatureActivity::class.java))
             }
             R.id.ib_filter -> {
                 PopupMenu(this, binding.include.ibSetting).apply {
