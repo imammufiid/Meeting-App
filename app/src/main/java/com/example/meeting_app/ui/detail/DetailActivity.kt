@@ -78,6 +78,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         when (it) {
             is DetailState.IsLoading -> showLoading(it.state)
             is DetailState.IsLoadingProgressBar -> showLoadingProgressBar(it.state)
+            is DetailState.AttendanceSuccess -> showToast(it.message)
             is DetailState.Error -> showToast(it.err, false)
             is DetailState.LikeForum -> likeForum(it.message, it.data)
             is DetailState.AddForum -> addForum(it.message, it.data)
