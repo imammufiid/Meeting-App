@@ -209,7 +209,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.menu_signature -> {
             SignatureBottomSheet().show(
                 supportFragmentManager, SignatureBottomSheet.TAG

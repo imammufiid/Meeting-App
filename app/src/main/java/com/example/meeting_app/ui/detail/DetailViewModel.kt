@@ -26,14 +26,14 @@ class DetailViewModel() : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    when(it.status) {
+                    when (it.status) {
                         200 -> meeting.postValue(it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
                     state.value = DetailState.IsLoading()
                 }, {
                     val httpException = it as HttpException
-                    when(httpException.code()) {
+                    when (httpException.code()) {
                         404 -> {
                             val message = "Data tidak ditemukan"
                             state.value = DetailState.Error(message)
@@ -57,14 +57,14 @@ class DetailViewModel() : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    when(it.status) {
+                    when (it.status) {
                         200 -> forums.postValue(it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
                     state.value = DetailState.IsLoadingProgressBar()
                 }, {
                     val httpException = it as HttpException
-                    when(httpException.code()) {
+                    when (httpException.code()) {
                         404 -> {
                             val message = "Data Forum tidak ditemukan"
                             state.value = DetailState.Error(message)
@@ -83,7 +83,7 @@ class DetailViewModel() : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    when(it.status) {
+                    when (it.status) {
                         201 -> state.value = DetailState.LikeForum(it.message, it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
@@ -102,7 +102,7 @@ class DetailViewModel() : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    when(it.status) {
+                    when (it.status) {
                         201 -> state.value = DetailState.AddForum(it.message, it.data)
                         else -> state.value = DetailState.Error(it.message)
                     }
